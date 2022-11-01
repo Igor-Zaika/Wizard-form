@@ -1,0 +1,229 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
+.account_form {
+    position: relative;
+    display: flex;
+    margin-left: 16.25%;
+    height: 541px;
+    width: 67.37%;
+    background: #f3f6f7;
+}
+.account_frame_description {
+    margin-left: 16.25%;
+    display: flex;
+    align-items: center;
+    width: 67.37%;
+    height: 42px;
+    background: #5E97F3;
+}
+.frame_text {
+    width: 375px;
+    height: 17px;
+    margin-left: 2%;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #FFFFFF;
+}
+.frame_continue {
+    margin-left: 11px;
+    height: 17px;
+    font-family: 'Roboto';
+    font-weight: 900;
+    font-size: 14px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.frame_close {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    left: 82%;
+    cursor: pointer;
+}
+.avatar_box {
+    display: block;
+    width: 25.3%;
+    position: relative;
+}
+.avatar {
+    width: 171px;
+    height: 171px;
+    margin-left: 100px;
+    margin-top: 44px;
+    background: #FFFFFF;
+    border-radius: 100%;
+}
+.add_box {
+    display: flex;
+    margin-top: 14px;
+    margin-left: 144px;
+}
+.plus {
+    width: 15px;
+    height: 15px;
+}
+.add_avatar {
+    width: 66px;
+    height: 17px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #9BB0CB;
+    cursor: pointer;
+}
+.add_avatar_input {
+    position: absolute;
+    width: 115px;
+    height: 20px;
+    top: 232px;
+    left: 45%;
+    opacity: 0;
+}
+.account_inputs_box {
+    margin-left: 20.62%;
+    width: 81.69%;
+}
+.account_label {
+    display: block;
+    width: 80%;
+    margin-top: 23px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    color: #657C9A;
+    background: url('../../icons/star.png') no-repeat center right;
+}
+.name {
+    display: block;
+    width: 80%;
+    height: 40px;
+    padding-left: 10px;
+    background: #FFFFFF;
+    border: 1px solid #C1CFE0;
+    outline: none;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    &_red{
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 14px;
+        display: block;
+        margin-top: 4px;
+        width: 80%;
+        height: 40px;
+        padding-left: 10px;
+        background: #FFFFFF;
+        outline: none;
+        border: 1px solid red;
+    }
+}
+.text_error {
+    width: 27.78%;
+    height: 11px;
+    margin-top: 2px;
+    margin-left: 10px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 9px;
+    color: #EB5757;
+}
+.password_box {
+    position: relative;
+}
+.password {
+    display: block;
+    width: 80%;
+    height: 40px;
+    padding-left: 10px;
+    background: #FFFFFF;
+    border: 1px solid #C1CFE0;
+    outline: none;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    &_red{
+        display: block;
+        width: 80%;
+        height: 40px;
+        padding-left: 10px;
+        background: #FFFFFF;
+        outline: none;
+        border: 1px solid red;
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 14px;
+    }
+}
+.password_eye_visibility {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 74.5%;
+    top: 28px;
+    cursor: pointer;
+}
+.repeat_password_box {
+    position: relative;
+}
+.repeat_password {
+    display: block;
+    width: 80%;
+    height: 40px;
+    padding-left: 10px;
+    background: #FFFFFF;
+    border: 1px solid #C1CFE0;
+    outline: none;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    &_red{
+        display: block;
+        width: 80%;
+        height: 40px;
+        padding-left: 10px;
+        background: #FFFFFF;
+        outline: none;
+        border: 1px solid red;
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 14px;
+    }
+}
+.repeat_password_eye_visibility {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 74.5%;
+    top: 28px;
+    cursor: pointer;
+}
+.button_account {
+    position: absolute;
+    border: none;
+    width: 100px;
+    height: 40px;
+    left: 79.4%;
+    top: 470px;
+    background: #5E97F3;
+    color: #FFFFFF;
+    cursor: pointer;
+    &:hover {
+        background: #4185f4;
+    }
+}
+.text_error_image {
+    position: absolute;
+    height: 11px;
+    top: 255px;
+    left: 153px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 9px;
+    color: #EB5757;
+}

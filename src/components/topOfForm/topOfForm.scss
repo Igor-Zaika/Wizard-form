@@ -1,0 +1,39 @@
+h1 {
+    display: flex;
+    justify-content: center;
+    margin-top: 56px;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 35px;
+    color: #475666;
+}
+.top_of_form {
+    display: flex;
+    width: 67.37%;
+    height: 62px;
+    margin-left: 16.25%;
+    margin-top: 45px;
+}
+.rectangle,.rectangle_active {
+    display: flex;
+    width: 25.67%;
+    height: 62px;
+    align-items: center;
+    justify-content: center;
+    background: #3185f3;
+    cursor: pointer;
+    opacity: 0.2;
+    &_active {
+        background: #4E86E4;
+        opacity: 1;
+    }
+}
+.content_rectangle, .content_rectangle_active {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 24px;
+    color: #000001;
+    &_active {
+        color: #FFFFFF;
+    }
+}

@@ -1,0 +1,194 @@
+.wrapp_account_list {
+    position: relative;
+    margin-top: 29px;
+    width: 67.36%;
+    margin-left: 16.25%;
+    padding: 0;
+}
+.wrapp_account_list .account_frame:nth-child(even) {
+    background-color: #fff;
+}
+.account_frame  {
+    display: flex;
+    height: 93px;
+    background-color: #E7F0FF; 
+}
+.account_frame_shifted {
+    width: 100%;
+    margin-left: -70px;
+    display: flex;
+    height: 93px;
+    background-color: #E7F0FF;
+    opacity: 0.5;
+    transition: all 500ms;
+    &-exit {
+        opacity: 0.5;
+    }
+    &-exit-active {
+        opacity: 0.3;
+        transition: all 500ms;
+    }
+    &-exit-done {
+        opacity: 0;
+        transition: all 500ms;
+    }
+}
+.account_pic {
+    width: 40px;
+    height: 40px;
+    margin-left: 14px;
+    margin-top: 26px;
+    border-radius: 100%;
+}
+.names_box {
+    width: 22.6%;
+    display: block;
+    margin-left: 3%;
+    margin-top: 37px;
+}
+.name_account {
+    height: 17px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #475666;
+}
+.user_name_account {
+    height: 11px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 9px;
+    color: #475666;
+}
+.account_company {
+    width: 21.5%;
+    height: 17px;
+    margin-top: 37px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #475666;
+}
+.account_contacts {
+    width: 24.5%;
+    height: 17px;
+    margin-top: 37px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #475666;
+}
+.account_last_update {
+    width: 15.5%;
+    height: 17px;
+    margin-top: 37px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #475666;
+}
+.account_edit {
+    margin-top: 37px;
+    width: 15px;
+    height: 15px;
+    filter: invert(82%) sepia(13%) saturate(259%) hue-rotate(172deg) brightness(91%) contrast(87%);
+    cursor: pointer;
+}
+.account_close {
+    margin-top: 37px;
+    width: 15px;
+    height: 15px;
+    margin-left: 2.27%;
+    filter: invert(82%) sepia(13%) saturate(259%) hue-rotate(172deg) brightness(91%) contrast(87%);
+    cursor: pointer;
+}
+.extra_box {
+    position: absolute;
+    right: 12px;
+    display: flex;
+    margin-left: 70px;
+}
+.account_close_red {
+    margin-top: 37px;
+    width: 15px;
+    height: 15px;
+    margin-left: 2.27%;
+    cursor: pointer;
+    filter: invert(12%) sepia(96%) saturate(5792%) hue-rotate(360deg) brightness(104%) contrast(95%);
+}
+.delete_red {
+    margin-top: 35px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    color: #f80808;
+}
+.loading_error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+.dialog_wrapp {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.2);
+}
+.dilog_window {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    animation: dialog-animate 0.5s forwards;
+}
+.dilog_name {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+}
+.dialog_pic {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+.dialog_buttons {
+    display: flex;
+    align-items: center;
+}
+.button_yes { 
+    background: #f80808;
+    width: 42px;
+    color: white;
+    padding: 10px;
+    margin-right: 4px;
+    border: none;
+    cursor: pointer;
+}
+.button_no {
+    background: #4E86E4;
+    width: 42px;
+    color: white;
+    padding: 10px;
+    margin-left: 4px;
+    border: none;
+    cursor: pointer;
+}
+@keyframes dialog-animate {
+    0%{
+        transform: translate(-50%,-700px);
+    }
+    100%{
+        transform: translate(-50%,-50%);
+    }
+}

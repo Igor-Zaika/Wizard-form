@@ -1,0 +1,110 @@
+.title_box, .user_box, .account_field {
+    display: flex;
+}
+.users_lists_text {
+    margin-top: 66px;
+    margin-left: 8px;
+    width: 140px;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 24px;
+    color: #9BB0CB;
+    text-decoration: none;
+    cursor: pointer;
+}
+.users_lists_arrow {
+    margin-left: 16.25%;
+    margin-top: 73px;
+    width: 15px;
+    height: 15px;
+    transform: rotate(90deg);
+}
+.user_title {
+    margin-left: 19.47%;
+    margin-top: 56px;
+}
+.editing_title {
+    margin-left: 20.47%;
+    margin-top: 56px;
+    margin-bottom: -15px;
+}
+.user_form {
+    width: 67.44%;
+    height: 100%;
+    padding-bottom: 62px;
+    background: #edf2fa;
+    margin-left: 16.25%;
+}
+.wrapper_user_data {
+    display: flex;
+}
+.photo_side {
+    margin-top: 38px;
+    margin-left: 5.98%;
+}
+.description_side {
+    margin-left: 9.38%;
+    margin-top: 66px;
+}
+.user_photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    border: 3px solid #5E97F3;
+}
+.user_box_one {
+    display: flex;
+    width: 160px;
+}
+.user_field_title {
+    height: 17px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #475666;
+}
+.user_field_edit {
+    width: 15px;
+    height: 15px;
+    margin-left: 8px;
+    filter: invert(1);
+}
+.first_point {
+    width: 150px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #475666;
+}
+.second_point {
+    width: 150px;
+    margin-top: 16px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #475666;
+}
+.user_box_two {
+    display: block;
+}
+.data_user_first {
+    word-wrap: break-word;
+    width: 260px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    color: #657C9A;
+}
+.data_user_second {
+    word-wrap: break-word;
+    margin-top: 16px;
+    width: 260px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    color: #657C9A;
+}
+.personal_field, .contacts_field, .capabilities_field {
+    display: flex;
+    margin-top: 40px;
+}

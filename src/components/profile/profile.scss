@@ -1,0 +1,163 @@
+.profile_form {
+    position: relative;
+    display: flex;
+    margin-left: 16.25%;
+    height: 541px;
+    width: 67.37%;
+    background: #f3f6f7;
+}
+.profile_first_box {
+    margin-top: 41px;
+    margin-left: 11.7%;
+    width: 34%;
+}
+.profile_label {
+    display: block;
+    height: 17px;
+    margin-top: 24px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    color: #657C9A;
+}
+.profile_label_star {
+    display: block;
+    height: 17px;
+    margin-top: 24px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    color: #657C9A;
+    background: url('../../icons/star.png') no-repeat center right;
+}
+.profile_input {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #C1CFE0;
+    outline: none;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    &_red {
+        display: block;
+        width: 100%;
+        margin-top: 4px;
+        height: 40px;
+        background: #FFFFFF;
+        border: 1px solid #EB5757;
+        outline: none;
+        font-family: 'Roboto';
+        font-weight: 500;
+        font-size: 14px;
+    }
+}
+.text_error, .text_error_button {
+    width: 27.78%;
+    height: 11px;
+    margin-top: 2px;
+    margin-left: 10px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 9px;
+    color: #EB5757;
+    &_button {
+        position: absolute;
+        top: 511px;
+        left: 78.79%;
+    }
+}
+.lable_birth_date {
+    display: block;
+    margin-top: 24px;
+    width: 242px;
+    height: 17px;
+    left: 23.93%;
+    top: 500px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #657C9A;
+    background: url('../../icons/star.png') no-repeat center right;
+}
+.calendar, .calendar_red {
+    display: block;
+    width: 242px;
+    height: 40px;
+    margin-top: 4px;
+    border: 1px solid #E7F0FF;
+    text-indent: 10px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 14px;
+    color: #000000;
+    background: #FFFFFF url('../../icons/calendar.svg') no-repeat center right 3%;
+    outline: none;
+    &_red {
+        border: 1px solid #EB5757;
+    }
+}
+.react-datepicker__triangle {
+    display: none;
+}
+:focus::-webkit-input-placeholder {
+    color: transparent
+}
+.profile_second_box {
+    margin-top: 41px;
+    margin-left: 11.7%;
+    width: 34%;
+}
+.gender {
+    display: block;
+    margin-top: 20px;
+    width: 45px;
+    height: 17px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    color: #657C9A;
+}
+.radio_group {
+    margin-top: 10px;
+    width: 172px;
+    height: 18px;
+}
+.gender_label {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 14px;
+    color: #657C9A;
+}
+.button_back {
+    position: absolute;
+    border: none;
+    width: 100px;
+    height: 40px;
+    left: 57.5%;
+    top: 470px;
+    background: #d3dbe8;
+    color: #FFFFFF;
+    cursor: pointer;
+    &:hover {
+        background: #5E97F3;
+    }
+}
+.button_forward {
+    position: absolute;
+    border: none;
+    width: 100px;
+    height: 40px;
+    left: 79.4%;
+    top: 470px;
+    background: #5E97F3;
+    color: #FFFFFF;
+    cursor: pointer;
+    &:hover {
+        background: #4185f4;
+    }
+}

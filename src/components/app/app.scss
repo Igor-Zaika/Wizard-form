@@ -1,0 +1,24 @@
+.fade-enter {
+    opacity: 0;
+    transform: translateX(-100%);
+    // transform: translateX(-750px) rotate(90deg);
+}
+.fade-enter-active {
+    opacity: 1;
+    transform: translateX(0%);
+    // transform: translateX(0) rotate(0deg);
+}
+.fade-exit {
+    opacity: 1;
+    transform: translateX(0%);
+    // transform: translateX(0) rotate(0deg);
+}
+.fade-exit-active {
+    opacity: 0;
+    transform: translateX(100%);
+    // transform: translateX(750px) rotate(-90deg);
+}
+.fade-enter-active,
+.fade-exit-active {
+    transition: all 400ms;
+}
