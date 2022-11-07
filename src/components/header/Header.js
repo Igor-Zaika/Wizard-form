@@ -1,7 +1,8 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { clearSingleUserData, switchForm } from '../topOfForm/formsSlice';
+import { removeSingleUser, selectAll as  singleData } from '../user/SingleUserSlice'
+import { switchForm } from '../topOfForm/formsSlice';
 
 import './header.scss'
 import logo from '../../icons/logo.svg';
@@ -9,12 +10,22 @@ import user from '../../icons/user.svg'
 import users from '../../icons/users.svg'
 
 const Header = () => {
-    const { activeIcon } = useSelector(state => state);
+    const { activeIcon } = useSelector(state => state.users);
     const dispatch = useDispatch();
+    const single = useSelector(singleData);
+    
 
     const setTabAndClearData = () => {
-        dispatch(clearSingleUserData());
         dispatch(switchForm("account"));
+        if(single[0]){
+            dispatch(removeSingleUser(single[0]));
+        }
+    }
+
+    const clearSingleUser = () => {
+        if(single[0]){
+            dispatch(removeSingleUser(single[0]));
+        }
     }
 
     return(
@@ -35,6 +46,7 @@ const Header = () => {
                         <Link 
                             to="/" 
                             className="list_users"
+                            onClick={() => clearSingleUser()}
                             >List of users
                         </Link>
                     </nav>

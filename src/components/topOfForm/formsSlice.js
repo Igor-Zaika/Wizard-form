@@ -48,9 +48,6 @@ const formsSlice = createSlice({
             usersAdapter.setOne(state, action.payload);
             setList(action.payload.id, action.payload)        
         },
-        clearSingleUserData: (state) => {
-            state.singleUser = null;
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -66,11 +63,12 @@ const formsSlice = createSlice({
     }
 });
 
+
 const {actions, reducer} = formsSlice;
 
 export default reducer;
 
-export const {selectAll} = usersAdapter.getSelectors(state => state);
+export const {selectAll} = usersAdapter.getSelectors(state => state.users);
 
 export const {
     switchForm,
@@ -78,5 +76,4 @@ export const {
     removeUser,
     setUserData,
     changeEditedUserData,
-    clearSingleUserData
 } = actions;

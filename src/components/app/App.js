@@ -1,7 +1,5 @@
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-// import { useEffect, useSelector } from "react";
 
 import MainPage from "../pages/MainPage";
 import UserCreationPage from "../pages/UserCreationPage";
@@ -35,28 +33,6 @@ const App = () => {
 			</main>	
 		</>		
 	);
-
-	// return (
-	// 	<>
-	// 		<Header/>
-	// 		<main>
-	// 			<SwitchTransition mode="out-in">
-	// 				<CSSTransition key={location.key} classNames="fade" timeout={400}>
-	// 					<Routes location={location}>	
-	// 						{/* <Route element={<Header/>}> */}
-	// 							<Route path="/" element={<MainPage/>}/>
-	// 							<Route path="/:userId" element={<UserViewPage/>}/>
-	// 							<Route path="/userCreation" element={<UserCreationPage/>}/>					
-	// 							<Route path="/userEditing" element={<UserEditingPage/>}/>
-	// 						{/* </Route> */}
-	// 						<Route path="*" element={<Page404/>}/>				
-	// 					</Routes>
-	// 				</CSSTransition>
-	// 			</SwitchTransition>
-	// 		</main>	
-			
-	// 	</>		
-	// );
 
 	// return (
 	// 	<>

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
 
-
+import { singleUserData, selectAll as  singleData } from '../user/SingleUserSlice'
 import TopOfForm from '../topOfForm/TopOfForm';
 import Account from '../account/Account';
 import Profile from '../profile/Profile';
@@ -11,16 +11,23 @@ import Capabilities from '../capabilities/Capabilities';
 import arrow from '../../icons/menu.svg'
 
 const UserEditing = () => {
-    const { tabs } = useSelector(state => state);
-    
+    const dispatch = useDispatch();
+    const { tabs } = useSelector(state => state.users);
     let navigate = useNavigate();
-    // const dispatch = useDispatch();
+    const single = useSelector(singleData);
+
+    useEffect(() => {
+        dispatch(singleUserData());
+        // eslint-disable-next-line
+    }, []);
     
     return(
         <>
             <div className="title_box"> 
                 <img  className="users_lists_arrow" src={arrow} alt="arrow" />
-                <div className="users_lists_text" onClick={() => navigate(-1)}>Users Profile</div>
+                <div 
+                    className="users_lists_text" 
+                    onClick={() => navigate(`/${single[0].id}`)}>Users Profile</div>
                 <h1 className="editing_title">Editing</h1>
             </div>
             <TopOfForm/>

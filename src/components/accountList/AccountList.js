@@ -1,9 +1,9 @@
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { selectAll, removeUser, usersData, setUserData} from '../topOfForm/formsSlice'
 import { useState, useRef, useEffect } from 'react';
 
+import { selectAll, removeUser, usersData } from '../topOfForm/formsSlice'
 import NoUsers from '../noUsers/NoUsers';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -14,26 +14,18 @@ import close from '../../icons/close.png'
 
 const AccountList = () => {
     const allUsers = useSelector(selectAll);
-    const isLoading = useSelector(state => state.formsLoadingStatus);
+    const isLoading = useSelector(state => state.users.formsLoadingStatus);
+
     const dispatch = useDispatch();
     const wrapperRef = useRef(null);
-    // const userId = useParams();
-
-    // const user = allUsers.filter(user => user.id === userId.userId);
-
+ 
     const [dialog, setDialog] = useState({
         pic: "",
         id: "",
     });
     const [singleUserId, setSingleUserId] = useState(null);
 
-    // const putSingleId = () => {
-    //     dispatch(setUserData(user[0]));
-    // }
-
-
     useEffect(() => {
-        // dispatch(switchActiveIcon('list'));
         dispatch(usersData());
         // eslint-disable-next-line
     },[])

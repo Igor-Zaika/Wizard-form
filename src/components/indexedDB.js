@@ -32,6 +32,8 @@ export async function getAll() {
 };
 
 
+
+
 const dbPromiseSecond = openDB('allUsers', 1, {
   upgrade(db) {
     db.createObjectStore('users');
@@ -48,4 +50,36 @@ export async function getAllList() {
 
 export async function delUser(key) {
   return (await dbPromiseSecond).delete('users', key);
+};
+
+//SingleUser 
+
+const dbPromiseSingle = openDB('singleUser', 1, {
+  upgrade(db) {
+    db.createObjectStore('single');
+  },
+});
+
+export async function setSingleUser(key, val) {
+  return (await dbPromiseSingle).put('single', val, key);
+};
+
+// export async function setSingleUserTabs(key, val) {
+//   return (await dbPromiseSecond).put('single', val, key);
+// };
+
+export async function getSingleUser() {
+  return (await (await dbPromiseSingle).getAll('single'));
+};
+
+// export async function getSingleUserTabs() {
+//   return (await (await dbPromiseSingle).getAll('singleUserTabs'));
+// };
+
+export async function delSingleUser(key) {
+  return (await dbPromiseSingle).delete('single', key);
+};
+
+export async function clearSingleUser() {
+  return (await dbPromiseSingle).clear('single');
 };

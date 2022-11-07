@@ -1,11 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage, useField } from 'formik';
 import Select from 'react-select';
 import * as Yup from 'yup';
-import { clear, set, keys, setList, getAll } from '../indexedDB';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 
+import { changeLastUpdate } from '../../func';
+import { clear, set, keys, setList, getAll, setSingleUser } from '../indexedDB';
+import { changeSingleUserData, selectAll as  singleData } from '../user/SingleUserSlice'
 import { switchForm, changeEditedUserData } from '../topOfForm/formsSlice';
 import './capabilities.scss';
 
@@ -28,8 +30,9 @@ const MyCheckbox = ({ children, ...props }) => {
 
 const Capabilities = () => {
     let navigate = useNavigate();
-    const { singleUser } = useSelector(state => state);
+    const single = useSelector(singleData);
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const [capabilitiesName, setCapabilitiesName] = useState(true);
     
@@ -92,13 +95,14 @@ const Capabilities = () => {
 
     return(
         <Formik
-            initialValues={singleUser ? singleUser : initialStore}
+            initialValues={single.length > 0 && location.pathname === '/userEditing' ? single[0] : initialStore}
             validationSchema={validationRules}
             onSubmit = {(values, {resetForm}) => {
-                if(singleUser) {
-                    values.update = Date.now();
-                    dispatch(changeEditedUserData(values));
-                    navigate(-1);
+                if(location.pathname === '/userEditing') {
+                    setSingleUser('singleUser', values);
+                    dispatch(changeSingleUserData(changeLastUpdate(values)));
+                    dispatch((changeEditedUserData(changeLastUpdate(values))));
+                    navigate(`/${single[0].id}`);
                 } else {
                     set('capabilities', values);
                     getAllFormsData();
@@ -177,13 +181,13 @@ const Capabilities = () => {
                             </MyCheckbox>
                         </div>
                     </div>
-                    {singleUser ? <button type="submit" className='button_account'>Save</button> :
+                    {single.length > 0 && location.pathname === '/userEditing' ? <button type="submit" className='button_account'>Save</button> :
                         <>
                             <button onClick={() => dispatch(switchForm("contacts"))} className='button_capabilities_back' >Back</button>
                             <button type="submit" className='button_capabilities_finish' disabled={capabilitiesName}>Finish</button>
                         </>
                     }    
-                    {capabilitiesName && !singleUser ? <div className="text_error_button">Fill out the previous form</div> : null}
+                    {capabilitiesName && single.length === 0 ? <div className="text_error_button">Fill out the previous form</div> : null}
                 </Form>
             )}   
         </Formik>

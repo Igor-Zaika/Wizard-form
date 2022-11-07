@@ -1,12 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik, Form, ErrorMessage, useField } from 'formik';
 import InputMask from "react-input-mask";
 import Select from 'react-select';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {set, keys} from '../indexedDB';
+import {set, keys, setSingleUser} from '../indexedDB';
 
+import { changeLastUpdate } from '../../func';
+import { changeSingleUserData, selectAll as  singleData } from '../user/SingleUserSlice'
 import { switchForm, changeEditedUserData } from '../topOfForm/formsSlice';
 import './contacts.scss';
 import minus from '../../icons/minus.svg';
@@ -33,15 +35,16 @@ const MyContactInput = ({ label, inputmask, ...props }) => {
 
 const Contacts = () => {
     let navigate = useNavigate();
-    const { singleUser } = useSelector(state => state);
+    const single = useSelector(singleData);
     const dispatch = useDispatch(); 
+    const location = useLocation();
     const [phoneNumber, setPhoneNumber] = useState(checkAmountPhones());
     const [contactsName, setContactsName] = useState(true);
 
     function checkAmountPhones() {
-        if(singleUser && singleUser.phone3) {
+        if(single.length > 0 && single.phone3) {
             return 3;
-        } else if(singleUser && singleUser.phone2) {
+        } else if(single.length > 0 && single.phone2) {
             return 2;
         } else {
             return 1;
@@ -163,7 +166,7 @@ const Contacts = () => {
 
     return (
         <Formik
-            initialValues={singleUser ? singleUser : initialStore}
+            initialValues={single.length > 0 && location.pathname === '/userEditing' ? single[0] : initialStore}
             validationSchema={Yup.object().shape({
                 company: Yup.string()
                     .max(50, "Too Long!")
@@ -176,10 +179,11 @@ const Contacts = () => {
                 fax: Yup.string(),
             })}
             onSubmit = {(values, {resetForm}) => {
-                if(singleUser) {
-                    values.update = Date.now();
-                    dispatch(changeEditedUserData(values));
-                    navigate(-1);
+                if(location.pathname === '/userEditing') {
+                    setSingleUser('singleUser', values)
+                    dispatch(changeSingleUserData(changeLastUpdate(values)));
+                    dispatch((changeEditedUserData(changeLastUpdate(values))));
+                    navigate(`/${single[0].id}`);
                 } else {
                     set('contacts', values)
                     dispatch(switchForm("capabilities"))
@@ -239,13 +243,13 @@ const Contacts = () => {
                         {renderPhoneNumbers()}
                         <div onClick={() => onAddPhone()} className="add_phone"> <img src={plus} alt="plus" /> add phone number</div>
                     </div>
-                    {singleUser ? <button type="submit" className='button_account'>Save</button> :
+                    {single.length > 0 && location.pathname === '/userEditing' ? <button type="submit" className='button_account'>Save</button> :
                         <>
                            <button onClick={() => dispatch(switchForm("profile"))} className='button_contacts_back' >Back</ button>
                             <button disabled={ contactsName } type="submit" className='button_contacs_forward' >Forward</button>
                         </>
                     }                   
-                    {contactsName && !singleUser ? <div className="text_error_button">Fill out the previous form</div> : null}
+                    {contactsName && single.length === 0 ? <div className="text_error_button">Fill out the previous form</div> : null}
                 </Form>
             )}
             

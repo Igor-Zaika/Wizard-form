@@ -1,16 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { switchForm } from '../topOfForm/formsSlice'
+import { selectAll as  singleData } from '../user/SingleUserSlice'
 
 import './topOfForm.scss'
 
 
 const TopOfForm = () => {
-    const { tabs, singleUser } = useSelector(state => state);
+    const { tabs } = useSelector(state => state.users);
+    const single = useSelector(singleData);
     const dispatch = useDispatch();
 
     const getActiveForm = (name) => {
-        if(!singleUser) {
+        if(single.length === 0) {
             dispatch(switchForm(name));
         }
     }
