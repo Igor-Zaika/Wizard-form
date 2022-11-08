@@ -64,17 +64,10 @@ export async function setSingleUser(key, val) {
   return (await dbPromiseSingle).put('single', val, key);
 };
 
-// export async function setSingleUserTabs(key, val) {
-//   return (await dbPromiseSecond).put('single', val, key);
-// };
 
 export async function getSingleUser() {
   return (await (await dbPromiseSingle).getAll('single'));
 };
-
-// export async function getSingleUserTabs() {
-//   return (await (await dbPromiseSingle).getAll('singleUserTabs'));
-// };
 
 export async function delSingleUser(key) {
   return (await dbPromiseSingle).delete('single', key);

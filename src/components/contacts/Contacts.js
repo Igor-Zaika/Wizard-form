@@ -166,7 +166,7 @@ const Contacts = () => {
 
     return (
         <Formik
-            initialValues={single.length > 0 && location.pathname === '/userEditing' ? single[0] : initialStore}
+            initialValues={single.length > 0 && location.pathname === '/Wizard-form/userEditing' ? single[0] : initialStore}
             validationSchema={Yup.object().shape({
                 company: Yup.string()
                     .max(50, "Too Long!")
@@ -179,11 +179,11 @@ const Contacts = () => {
                 fax: Yup.string(),
             })}
             onSubmit = {(values, {resetForm}) => {
-                if(location.pathname === '/userEditing') {
+                if(location.pathname === '/Wizard-form/userEditing') {
                     setSingleUser('singleUser', values)
                     dispatch(changeSingleUserData(changeLastUpdate(values)));
                     dispatch((changeEditedUserData(changeLastUpdate(values))));
-                    navigate(`/${single[0].id}`);
+                    navigate(`/Wizard-form/${single[0].id}`);
                 } else {
                     set('contacts', values)
                     dispatch(switchForm("capabilities"))
@@ -243,7 +243,7 @@ const Contacts = () => {
                         {renderPhoneNumbers()}
                         <div onClick={() => onAddPhone()} className="add_phone"> <img src={plus} alt="plus" /> add phone number</div>
                     </div>
-                    {single.length > 0 && location.pathname === '/userEditing' ? <button type="submit" className='button_account'>Save</button> :
+                    {single.length > 0 && location.pathname === '/Wizard-form/userEditing' ? <button type="submit" className='button_account'>Save</button> :
                         <>
                            <button onClick={() => dispatch(switchForm("profile"))} className='button_contacts_back' >Back</ button>
                             <button disabled={ contactsName } type="submit" className='button_contacs_forward' >Forward</button>

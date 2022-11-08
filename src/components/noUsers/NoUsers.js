@@ -6,7 +6,7 @@ const NoUsers = () => {
     return(
         <div className="no_users_wrapp">
             <div className="users_content">No users here :(</div>
-            <Link to="/userCreation"> <button className='button_create_user'>Create new user</button> </Link>
+            <Link to="/Wizard-form/userCreation"> <button className='button_create_user'>Create new user</button> </Link>
         </div>
     );
 }

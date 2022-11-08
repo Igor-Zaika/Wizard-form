@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import MainPage from "../pages/MainPage";
@@ -20,12 +20,10 @@ const App = () => {
 				<SwitchTransition mode="out-in">
 					<CSSTransition key={location.key} classNames="fade" timeout={400}>
 						<Routes location={location}>	
-							{/* <Route element={<Header/>}> */}
-								<Route path="/" element={<MainPage/>}/>
-								<Route path="/:userId" element={<UserViewPage/>}/>
-								<Route path="/userCreation" element={<UserCreationPage/>}/>					
-								<Route path="/userEditing" element={<UserEditingPage/>}/>
-							{/* </Route> */}
+							<Route path="/Wizard-form" element={<MainPage/>}/>
+							<Route path="/Wizard-form/:userId" element={<UserViewPage/>}/>
+							<Route path="/Wizard-form/userCreation" element={<UserCreationPage/>}/>					
+							<Route path="/Wizard-form/userEditing" element={<UserEditingPage/>}/>
 							<Route path="*" element={<Page404/>}/>				
 						</Routes>
 					</CSSTransition>
@@ -33,19 +31,6 @@ const App = () => {
 			</main>	
 		</>		
 	);
-
-	// return (
-	// 	<>
-	// 		<Header/>
-	// 		<Routes>	
-	// 			<Route path="/" element={<MainPage/>}/>
-	// 			<Route path="/:userId" element={<UserViewPage/>}/>
-	// 			<Route path="/userCreation" element={<UserCreationPage/>}/>					
-	// 			<Route path="/userEditing" element={<UserEditingPage/>}/>
-	// 			<Route path="*" element={<Page404/>}/>			
-	// 		</Routes>
-	// 	</>		
-	// );
 }
 
 export default App;

@@ -20,12 +20,14 @@ const User = () => {
     const user = allUsers.filter(user => user.id === userId.userId);
     const isLoading = useSelector(state => state.users.formsLoadingStatus);
 
-    useEffect(() => {
-        if(!single[0]){
-            setSingleUser('singleUser', user[0]);
-        }
-        // eslint-disable-next-line
-    }, []);
+    setSingleUser('singleUser', user[0])
+    // useEffect(() => {
+    //     if(!single[0]){
+    //         console.log('db');
+    //         setSingleUser('singleUser', user[0]);
+    //     }
+    //     // eslint-disable-next-line
+    // }, []);
     
     useEffect(() => {
         if(!single[0]){
@@ -69,7 +71,7 @@ const User = () => {
                 <img  className="users_lists_arrow" src={arrow} alt="arrow" />
                 <Link 
                     onClick={() => delSingleUser(user)}
-                    to="/" 
+                    to="/Wizard-form" 
                     className="users_lists_text"
                 >Users lists </Link>
                 <h1 className="user_title">User name</h1>
@@ -83,7 +85,9 @@ const User = () => {
                         <div className="account_field">
                             <div className="user_box_one">
                                 <div className="user_field_title">Account</div>
-                                <Link to="/userEditing" onClick={() => dispatch(switchForm("account"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
+                                <Link to="/Wizard-form/userEditing"
+                                    onClick={() => dispatch(switchForm("account"))}>
+                                    <img className="user_field_edit" src={edit} alt="edit" /></Link>
                             </div>
                             <div className="user_box_two">
                                 <div className="user_box">
@@ -99,7 +103,7 @@ const User = () => {
                         <div className="personal_field">
                             <div className="user_box_one">
                                 <div className="user_field_title">Personal</div>
-                                <Link to="/userEditing" onClick={() => dispatch(switchForm("profile"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
+                                <Link to="/Wizard-form/userEditing" onClick={() => dispatch(switchForm("profile"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
                             </div>
                             <div className="user_box_two">
                                 <div className="user_box">
@@ -131,7 +135,7 @@ const User = () => {
                         <div className="contacts_field">
                             <div className="user_box_one">
                                 <div className="user_field_title">Contacts</div>
-                                <Link to="/userEditing" onClick={() => dispatch(switchForm("contacts"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
+                                <Link to="/Wizard-form/userEditing" onClick={() => dispatch(switchForm("contacts"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
                             </div>
                             <div className="user_box_two">
                                 <div className="user_box">
@@ -174,7 +178,7 @@ const User = () => {
                         <div className="capabilities_field">
                             <div className="user_box_one">
                                 <div className="user_field_title">Capabilities</div>
-                                <Link to="/userEditing" onClick={() => dispatch(switchForm("capabilities"))}><img className="user_field_edit" src={edit} alt="edit"/></Link>
+                                <Link to="/Wizard-form/userEditing" onClick={() => dispatch(switchForm("capabilities"))}><img className="user_field_edit" src={edit} alt="edit"/></Link>
                             </div>
                             <div className="user_box_two">
                                 <div className="user_box">

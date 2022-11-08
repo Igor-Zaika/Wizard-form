@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { removeSingleUser, selectAll as  singleData } from '../user/SingleUserSlice'
@@ -35,7 +35,7 @@ const Header = () => {
                     <nav className={activeIcon === "user" ? "add_new_user_box_active" : "add_new_user_box"}>
                         <img className='user' src={user} alt='users'/>
                         <Link
-                            to="/userCreation" 
+                            to="/Wizard-form/userCreation" 
                             className="new_user"
                             onClick={() => setTabAndClearData()}
                             >Add new user
@@ -44,7 +44,7 @@ const Header = () => {
                     <nav className={activeIcon === "list" ? "list_of_users_box_active" : "list_of_users_box"}>
                         <img className='users' src={users} alt='user'/>
                         <Link 
-                            to="/" 
+                            to="/Wizard-form" 
                             className="list_users"
                             onClick={() => clearSingleUser()}
                             >List of users

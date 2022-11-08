@@ -41,8 +41,8 @@ const Account = () => {
     const { singleLoadingStatus } = useSelector(state => state.singleUser);
     const dispatch = useDispatch();
     const [avatarPreview, setAvatarPreview] = useState(null);
-    const [password, setPassword] = useState(location.pathname === '/userEditing' ? true : false);
-    const [repeatPassword, setRepeatPassword] = useState(location.pathname === '/userEditing' ? true : false);
+    const [password, setPassword] = useState(location.pathname === '/Wizard-form/userEditing' ? true : false);
+    const [repeatPassword, setRepeatPassword] = useState(location.pathname === '/Wizard-form/userEditing' ? true : false);
     const [suggestTab, setSuggestTab] = useState(false);
 
     const initialStore = {
@@ -89,14 +89,14 @@ const Account = () => {
     const renderAccount = () => {
         return(
             <>  
-                {suggestTab && location.pathname === '/userCreation' ? <div 
+                {suggestTab && location.pathname === '/Wizard-form/userCreation' ? <div 
                                     className="account_frame_description">
                                     <div className="frame_text">You have an unsaved user data. Do you want to complete it?</div>
                                     <div className="frame_continue" onClick={() => selectContinueForm()} >Continue</div>
                                     <img className="frame_close" src={close} alt="close" />
                                 </div> : null}
                 <Formik
-                    initialValues = {location.pathname === '/userEditing' ? single[0] : initialStore}
+                    initialValues = {location.pathname === '/Wizard-form/userEditing' ? single[0] : initialStore}
                     validationSchema={Yup.object({
                         avatar: Yup.mixed()
                             .required('A file is required')
@@ -124,11 +124,11 @@ const Account = () => {
                             .oneOf([Yup.ref('password'), null], "passwords don't match")
                     })}
                     onSubmit = {(values, {resetForm}) => {
-                        if(location.pathname === '/userEditing') { 
+                        if(location.pathname === 'Wizard-form/userEditing') { 
                             setSingleUser('singleUser', values);
                             dispatch(changeSingleUserData(changeLastUpdate(values)));
                             dispatch((changeEditedUserData(changeLastUpdate(values))));
-                            navigate(`/${single[0].id}`);                                          
+                            navigate(`/Wizard-form/${single[0].id}`);                                          
                         } else {
                             set('account', values);
                             dispatch(switchForm("profile"));
@@ -201,7 +201,7 @@ const Account = () => {
                                     />
                                 </div>
                             </div>
-                            {location.pathname === '/userEditing' ? <button className="button_account" type="submit">Save</button> :
+                            {location.pathname === '/Wizard-form/userEditing' ? <button className="button_account" type="submit">Save</button> :
                                 <button className='button_account' type="submit">Forward</button>
                             }                       
                         </Form>

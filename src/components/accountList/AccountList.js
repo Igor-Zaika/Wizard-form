@@ -108,7 +108,7 @@ const AccountList = () => {
                     <div className="account_company">{cutLongName(user.company)}</div>
                     <div className="account_contacts">{user.phone1 ? user.phone1 : user.email}</div>
                     <div className="account_last_update">{calcLastUpdate(user.update)}</div>
-                    {active ? null : <Link to={`/${user.id}`} ><img className="account_edit" src={edit} alt="edit" /></Link>}
+                    {active ? null : <Link to={`/Wizard-form/${user.id}`} ><img className="account_edit" src={edit} alt="edit" /></Link>}
                     {active ? 
                     <div ref={wrapperRef} className="extra_box" >
                         <img fill="red" className="account_close_red" src={close} alt="close"/>

@@ -95,14 +95,14 @@ const Capabilities = () => {
 
     return(
         <Formik
-            initialValues={single.length > 0 && location.pathname === '/userEditing' ? single[0] : initialStore}
+            initialValues={single.length > 0 && location.pathname === '/Wizard-form/userEditing' ? single[0] : initialStore}
             validationSchema={validationRules}
             onSubmit = {(values, {resetForm}) => {
-                if(location.pathname === '/userEditing') {
+                if(location.pathname === '/Wizard-form/userEditing') {
                     setSingleUser('singleUser', values);
                     dispatch(changeSingleUserData(changeLastUpdate(values)));
                     dispatch((changeEditedUserData(changeLastUpdate(values))));
-                    navigate(`/${single[0].id}`);
+                    navigate(`/Wizard-form/${single[0].id}`);
                 } else {
                     set('capabilities', values);
                     getAllFormsData();
@@ -181,7 +181,7 @@ const Capabilities = () => {
                             </MyCheckbox>
                         </div>
                     </div>
-                    {single.length > 0 && location.pathname === '/userEditing' ? <button type="submit" className='button_account'>Save</button> :
+                    {single.length > 0 && location.pathname === '/Wizard-form/userEditing' ? <button type="submit" className='button_account'>Save</button> :
                         <>
                             <button onClick={() => dispatch(switchForm("contacts"))} className='button_capabilities_back' >Back</button>
                             <button type="submit" className='button_capabilities_finish' disabled={capabilitiesName}>Finish</button>

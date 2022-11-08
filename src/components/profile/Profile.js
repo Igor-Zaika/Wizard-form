@@ -65,7 +65,7 @@ const Profile = () => {
     const rensedProfile = () => {
         return(
             <Formik 
-                initialValues={location.pathname === '/userEditing' ? single[0] : initialStore}
+                initialValues={location.pathname === '/Wizard-form/userEditing' ? single[0] : initialStore}
                 validationSchema={Yup.object({
                     firstname: Yup.string()
                         .max(50, "Too Long!")
@@ -89,11 +89,11 @@ const Profile = () => {
                     gender: Yup.mixed().required("Required field"),
                 })}
                 onSubmit = {(values, {resetForm}) => {
-                    if(location.pathname === '/userEditing') {
+                    if(location.pathname === '/Wizard-form/userEditing') {
                         setSingleUser('singleUser', values);
                         dispatch(changeSingleUserData(changeLastUpdate(values)));
                         dispatch((changeEditedUserData(changeLastUpdate(values))));
-                        navigate(`/${single[0].id}`);
+                        navigate(`/Wizard-form/${single[0].id}`);
                     } else {
                         set('profile', values)
                         dispatch(switchForm("contacts"))
@@ -158,13 +158,13 @@ const Profile = () => {
                             </div>
                             <Error className="text_error" name="gender" component="div"/>
                         </div>
-                        {location.pathname === '/userEditing' ? <button type="submit" className='button_account'>Save</button> :
+                        {location.pathname === '/Wizard-form/userEditing' ? <button type="submit" className='button_account'>Save</button> :
                             <>
                                 <button onClick={() => dispatch(switchForm("account"))} className='button_back' >Back</button>
                                 <button type="submit" className='button_forward' disabled={ profileName }>Forward</button>
                             </>
                         }                  
-                        {profileName && location.pathname === '/userCreation' ? <div className="text_error_button">Fill out the previous form</div> : null}
+                        {profileName && location.pathname === '/Wizard-form/userCreation' ? <div className="text_error_button">Fill out the previous form</div> : null}
                     </Form>
                 )}
             </Formik>
