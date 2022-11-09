@@ -184,6 +184,19 @@
     border: none;
     cursor: pointer;
 }
+.generate {
+    margin-top: 50px;
+    margin-left: 75%;
+    border: none;
+    width: 100px;
+    height: 40px;
+    background: rgb(244, 73, 73);
+    color: #FFFFFF;
+    cursor: pointer;
+    &:hover {
+        background: #ee0e0e;
+    }
+}
 @keyframes dialog-animate {
     0%{
         transform: translate(-50%,-700px);

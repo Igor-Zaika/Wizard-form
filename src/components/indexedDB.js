@@ -52,6 +52,10 @@ export async function delUser(key) {
   return (await dbPromiseSecond).delete('users', key);
 };
 
+export async function clearUsers() {
+  return (await dbPromiseSecond).clear('users');
+};
+
 //SingleUser 
 
 const dbPromiseSingle = openDB('singleUser', 1, {

@@ -99,7 +99,7 @@ const Account = () => {
                     initialValues = {location.pathname === '/Wizard-form/userEditing' ? single[0] : initialStore}
                     validationSchema={Yup.object({
                         avatar: Yup.mixed()
-                            .required('A file is required')
+                            // .required('A file is required')
                             .test('FILE_SIZE',
                                 'upload file is too big',
                                 (value) => !value || (value && value.size <= 1024 * 1024)

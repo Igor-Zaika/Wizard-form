@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useRef, useEffect } from 'react';
 
-import { selectAll, removeUser, usersData } from '../topOfForm/formsSlice'
+import { generateRandomListOfUsers } from '../../func';
+import { selectAll, removeUser, usersData, clearAllListOfUsers } from '../topOfForm/formsSlice'
 import NoUsers from '../noUsers/NoUsers';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -11,6 +12,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import './accountList.scss'
 import edit from '../../icons/edit.png'
 import close from '../../icons/close.png'
+import avatar from '../../icons/avatar.svg'
 
 const AccountList = () => {
     const allUsers = useSelector(selectAll);
@@ -93,6 +95,12 @@ const AccountList = () => {
         }
     }
 
+    // console.log(generateRandomListOfUsers(50));
+    const startGenerateRandomListOfUsers = () => {
+        dispatch(clearAllListOfUsers())
+    }
+    
+
     const renderAccountList = (arr) => {  
         const items = arr.map(user => {
             let active = singleUserId === user.id
@@ -100,7 +108,7 @@ const AccountList = () => {
         
             return  <CSSTransition key={user.id} timeout={500} classNames={clazz}>
                 <li className={clazz}>
-                    <img className="account_pic" src={user.img} alt="user" />
+                    <img className="account_pic" src={user.img ? user.img : avatar} alt="user"/>
                     <div className="names_box">
                         <div className="name_account">{cutLongName(user.firstname) + ' ' + cutLongName(user.lastname)}</div>
                         <div className="user_name_account">{cutLongName(user.name)}</div>
@@ -112,7 +120,7 @@ const AccountList = () => {
                     {active ? 
                     <div ref={wrapperRef} className="extra_box" >
                         <img fill="red" className="account_close_red" src={close} alt="close"/>
-                        <div className="delete_red" onClick={() => showConfirmation(user.img, user.id)}>delete</div>
+                        <div className="delete_red" onClick={() => showConfirmation(user.img ? user.img : user.name, user.id)}>delete</div>
                     </div> : 
                     <img className="account_close" src={close} alt="close" onClick={() => actionConfirmation(user.id)}/>}
                 </li>
@@ -144,6 +152,7 @@ const AccountList = () => {
                 </div>
             </div>
             </div> : null}
+            <button className="generate"onClick={() => startGenerateRandomListOfUsers()}>Generate accounts</button>
         </>
     );
 }

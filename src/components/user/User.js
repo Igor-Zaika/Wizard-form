@@ -21,13 +21,6 @@ const User = () => {
     const isLoading = useSelector(state => state.users.formsLoadingStatus);
 
     setSingleUser('singleUser', user[0])
-    // useEffect(() => {
-    //     if(!single[0]){
-    //         console.log('db');
-    //         setSingleUser('singleUser', user[0]);
-    //     }
-    //     // eslint-disable-next-line
-    // }, []);
     
     useEffect(() => {
         if(!single[0]){

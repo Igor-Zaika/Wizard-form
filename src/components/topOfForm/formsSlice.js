@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 
-import { getAllList, delUser, setList } from '../indexedDB';
+import { getAllList, delUser, setList, clearUsers } from '../indexedDB';
 
 const usersAdapter = createEntityAdapter();
 
@@ -48,6 +48,10 @@ const formsSlice = createSlice({
             usersAdapter.setOne(state, action.payload);
             setList(action.payload.id, action.payload)        
         },
+        clearAllListOfUsers: (state) => {
+            usersAdapter.removeAll(state);
+            clearUsers();
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -76,4 +80,5 @@ export const {
     removeUser,
     setUserData,
     changeEditedUserData,
+    clearAllListOfUsers
 } = actions;
