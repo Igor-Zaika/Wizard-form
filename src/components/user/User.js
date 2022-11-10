@@ -10,6 +10,7 @@ import { switchForm, usersData, selectAll } from '../topOfForm/formsSlice'
 import { removeSingleUser, singleUserData, selectAll as singleData } from '../user/SingleUserSlice'
 import arrow from '../../icons/menu.svg'
 import edit from '../../icons/edit.png'
+import avatar from '../../icons/avatar.svg';
 import './user.scss'
 
 const User = () => {
@@ -52,6 +53,10 @@ const User = () => {
         return skills.join('.\n')
     }
 
+    const upFirstLetter = (name) => {
+       return name.charAt(0).toUpperCase() + name.slice(1)
+    }
+
     const delSingleUser = () => {
         setTimeout(() => {
             dispatch(removeSingleUser(user[0]));
@@ -64,7 +69,7 @@ const User = () => {
                 <img  className="users_lists_arrow" src={arrow} alt="arrow" />
                 <Link 
                     onClick={() => delSingleUser(user)}
-                    to="/Wizard-form" 
+                    to="/wizard-form" 
                     className="users_lists_text"
                 >Users lists </Link>
                 <h1 className="user_title">User name</h1>
@@ -72,20 +77,20 @@ const User = () => {
             <div className="user_form">
                 <div className="wrapper_user_data">
                     <div className="photo_side">
-                        <img className="user_photo" src={user[0]?.img} alt="user"/>
+                        <img className={user[0]?.img ? "user_photo" : "user_photo_avatar"} src={user[0]?.img || avatar} alt="user"/>
                     </div>
                     <div className="description_side">
                         <div className="account_field">
                             <div className="user_box_one">
                                 <div className="user_field_title">Account</div>
-                                <Link to="/Wizard-form/userEditing"
+                                <Link to="/wizard-form/userEditing"
                                     onClick={() => dispatch(switchForm("account"))}>
                                     <img className="user_field_edit" src={edit} alt="edit" /></Link>
                             </div>
                             <div className="user_box_two">
                                 <div className="user_box">
                                     <div className="first_point">User name:</div>
-                                    <div className="data_user_first">{user[0]?.name}</div>
+                                    <div className="data_user_first">{user[0]?.name ? upFirstLetter(user[0]?.name) : null}</div>
                                 </div>
                                 <div className="user_box">
                                     <div className="second_point">Password:</div>
@@ -96,16 +101,16 @@ const User = () => {
                         <div className="personal_field">
                             <div className="user_box_one">
                                 <div className="user_field_title">Personal</div>
-                                <Link to="/Wizard-form/userEditing" onClick={() => dispatch(switchForm("profile"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
+                                <Link to="/wizard-form/userEditing" onClick={() => dispatch(switchForm("profile"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
                             </div>
                             <div className="user_box_two">
                                 <div className="user_box">
                                     <div className="first_point">First name:</div>
-                                    <div className="data_user_first">{user[0]?.firstname}</div>
+                                    <div className="data_user_first">{user[0]?.firstname ? upFirstLetter(user[0]?.firstname) : null}</div>
                                 </div>
                                 <div className="user_box">
                                     <div className="second_point">Last name:</div>
-                                    <div className="data_user_second">{user[0]?.lastname}</div>
+                                    <div className="data_user_second">{user[0]?.lastname ? upFirstLetter(user[0]?.lastname) : null}</div>
                                 </div>
                                 <div className="user_box">
                                     <div className="second_point">Birth date:</div>
@@ -128,7 +133,7 @@ const User = () => {
                         <div className="contacts_field">
                             <div className="user_box_one">
                                 <div className="user_field_title">Contacts</div>
-                                <Link to="/Wizard-form/userEditing" onClick={() => dispatch(switchForm("contacts"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
+                                <Link to="/wizard-form/userEditing" onClick={() => dispatch(switchForm("contacts"))}><img className="user_field_edit" src={edit} alt="edit" /></Link>
                             </div>
                             <div className="user_box_two">
                                 <div className="user_box">
@@ -171,7 +176,7 @@ const User = () => {
                         <div className="capabilities_field">
                             <div className="user_box_one">
                                 <div className="user_field_title">Capabilities</div>
-                                <Link to="/Wizard-form/userEditing" onClick={() => dispatch(switchForm("capabilities"))}><img className="user_field_edit" src={edit} alt="edit"/></Link>
+                                <Link to="/wizard-form/userEditing" onClick={() => dispatch(switchForm("capabilities"))}><img className="user_field_edit" src={edit} alt="edit"/></Link>
                             </div>
                             <div className="user_box_two">
                                 <div className="user_box">

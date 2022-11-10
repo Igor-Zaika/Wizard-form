@@ -41,8 +41,8 @@ const Account = () => {
     const { singleLoadingStatus } = useSelector(state => state.singleUser);
     const dispatch = useDispatch();
     const [avatarPreview, setAvatarPreview] = useState(null);
-    const [password, setPassword] = useState(location.pathname === '/Wizard-form/userEditing' ? true : false);
-    const [repeatPassword, setRepeatPassword] = useState(location.pathname === '/Wizard-form/userEditing' ? true : false);
+    const [password, setPassword] = useState(location.pathname === '/wizard-form/userEditing' ? true : false);
+    const [repeatPassword, setRepeatPassword] = useState(location.pathname === '/wizard-form/userEditing' ? true : false);
     const [suggestTab, setSuggestTab] = useState(false);
 
     const initialStore = {
@@ -89,17 +89,16 @@ const Account = () => {
     const renderAccount = () => {
         return(
             <>  
-                {suggestTab && location.pathname === '/Wizard-form/userCreation' ? <div 
+                {suggestTab && location.pathname === '/wizard-form/userCreation' ? <div 
                                     className="account_frame_description">
                                     <div className="frame_text">You have an unsaved user data. Do you want to complete it?</div>
                                     <div className="frame_continue" onClick={() => selectContinueForm()} >Continue</div>
                                     <img className="frame_close" src={close} alt="close" />
                                 </div> : null}
                 <Formik
-                    initialValues = {location.pathname === '/Wizard-form/userEditing' ? single[0] : initialStore}
+                    initialValues = {location.pathname === '/wizard-form/userEditing' ? single[0] : initialStore}
                     validationSchema={Yup.object({
                         avatar: Yup.mixed()
-                            // .required('A file is required')
                             .test('FILE_SIZE',
                                 'upload file is too big',
                                 (value) => !value || (value && value.size <= 1024 * 1024)
@@ -124,11 +123,11 @@ const Account = () => {
                             .oneOf([Yup.ref('password'), null], "passwords don't match")
                     })}
                     onSubmit = {(values, {resetForm}) => {
-                        if(location.pathname === 'Wizard-form/userEditing') { 
+                        if(location.pathname === '/wizard-form/userEditing') { 
                             setSingleUser('singleUser', values);
                             dispatch(changeSingleUserData(changeLastUpdate(values)));
                             dispatch((changeEditedUserData(changeLastUpdate(values))));
-                            navigate(`/Wizard-form/${single[0].id}`);                                          
+                            navigate(`/wizard-form/${single[0].id}`);                                         
                         } else {
                             set('account', values);
                             dispatch(switchForm("profile"));
@@ -144,7 +143,11 @@ const Account = () => {
                     {({values, setFieldValue, setFieldTouched, errors, touched}) => (
                         <Form className="account_form">
                             <div className="avatar_box">
-                                <img className="avatar" src={single.length > 0 ? avatarPreview || single[0].img : avatarPreview || avatar} alt="avatar" />
+                                <img 
+                                    className="avatar" 
+                                    // src={single.length > 0 ? avatarPreview || single[0].img : avatarPreview || avatar} 
+                                    src={ avatarPreview || single[0]?.img || avatar}
+                                    alt="avatar" />
                                 <div className='add_box'>
                                     <img className='plus' src={plus} alt="plus" />
                                     <label htmlFor="avatar"  className="add_avatar" >add avatar</label>
@@ -201,7 +204,7 @@ const Account = () => {
                                     />
                                 </div>
                             </div>
-                            {location.pathname === '/Wizard-form/userEditing' ? <button className="button_account" type="submit">Save</button> :
+                            {location.pathname === '/wizard-form/userEditing' ? <button className="button_account" type="submit">Save</button> :
                                 <button className='button_account' type="submit">Forward</button>
                             }                       
                         </Form>

@@ -35,7 +35,7 @@ const Header = () => {
                     <nav className={activeIcon === "user" ? "add_new_user_box_active" : "add_new_user_box"}>
                         <img className='user' src={user} alt='users'/>
                         <Link
-                            to="/Wizard-form/userCreation" 
+                            to="/wizard-form/userCreation" 
                             className="new_user"
                             onClick={() => setTabAndClearData()}
                             >Add new user
@@ -44,7 +44,7 @@ const Header = () => {
                     <nav className={activeIcon === "list" ? "list_of_users_box_active" : "list_of_users_box"}>
                         <img className='users' src={users} alt='user'/>
                         <Link 
-                            to="/Wizard-form" 
+                            to="/wizard-form" 
                             className="list_users"
                             onClick={() => clearSingleUser()}
                             >List of users

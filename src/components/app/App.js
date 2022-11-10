@@ -20,10 +20,10 @@ const App = () => {
 				<SwitchTransition mode="out-in">
 					<CSSTransition key={location.key} classNames="fade" timeout={400}>
 						<Routes location={location}>	
-							<Route path="/Wizard-form" element={<MainPage/>}/>
-							<Route path="/Wizard-form/:userId" element={<UserViewPage/>}/>
-							<Route path="/Wizard-form/userCreation" element={<UserCreationPage/>}/>					
-							<Route path="/Wizard-form/userEditing" element={<UserEditingPage/>}/>
+							<Route path="/wizard-form" element={<MainPage/>}/>
+							<Route path="/wizard-form/:userId" element={<UserViewPage/>}/>
+							<Route path="/wizard-form/userCreation" element={<UserCreationPage/>}/>					
+							<Route path="/wizard-form/userEditing" element={<UserEditingPage/>}/>
 							<Route path="*" element={<Page404/>}/>				
 						</Routes>
 					</CSSTransition>

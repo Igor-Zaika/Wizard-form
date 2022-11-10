@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useRef, useEffect } from 'react';
 
-import { generateRandomListOfUsers } from '../../func';
+import { setList, delUser } from '../indexedDB'
+import {  generateOneRandomUser } from '../../func';
 import { selectAll, removeUser, usersData, clearAllListOfUsers } from '../topOfForm/formsSlice'
 import NoUsers from '../noUsers/NoUsers';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 
-import './accountList.scss'
-import edit from '../../icons/edit.png'
-import close from '../../icons/close.png'
-import avatar from '../../icons/avatar.svg'
+import './accountList.scss';
+import edit from '../../icons/edit.png';
+import close from '../../icons/close.png';
+import avatar from '../../icons/avatar.svg';
 
 const AccountList = () => {
     const allUsers = useSelector(selectAll);
@@ -23,6 +24,7 @@ const AccountList = () => {
  
     const [dialog, setDialog] = useState({
         pic: "",
+        name: "",
         id: "",
     });
     const [singleUserId, setSingleUserId] = useState(null);
@@ -32,10 +34,11 @@ const AccountList = () => {
         // eslint-disable-next-line
     },[])
 
-    const showConfirmation = (pic, id) => {
+    const showConfirmation = (pic, id, name) => {
         setDialog({
             pic,
-            id
+            id,
+            name
         });
     }
 
@@ -60,13 +63,14 @@ const AccountList = () => {
         dispatch(removeUser(dialog.id));
         setDialog({
             pic: "",
-            id: ""
+            id: "",
+            name: ""
         });
 	}
 
     const cutLongName = (name) => {
-        if(name.length > 10) {
-            return name.charAt(0).toUpperCase() + name.slice(1, 10) + "..."
+        if(name.length > 14) {
+            return name.charAt(0).toUpperCase() + name.slice(1, 14) + "..."
         } else {
             return name.charAt(0).toUpperCase() + name.slice(1)
         }
@@ -95,9 +99,13 @@ const AccountList = () => {
         }
     }
 
-    // console.log(generateRandomListOfUsers(50));
-    const startGenerateRandomListOfUsers = () => {
-        dispatch(clearAllListOfUsers())
+    const startGenerateRandomListOfUsers = (num) => {
+        dispatch(clearAllListOfUsers());
+        for(let i = 0;i < num; i++){
+            const user = generateOneRandomUser();
+            setList(user.id,user);
+        }
+        dispatch(usersData());
     }
     
 
@@ -106,30 +114,37 @@ const AccountList = () => {
             let active = singleUserId === user.id
             let clazz = active ? "account_frame_shifted" : "account_frame"
         
-            return  <CSSTransition key={user.id} timeout={500} classNames={clazz}>
-                <li className={clazz}>
-                    <img className="account_pic" src={user.img ? user.img : avatar} alt="user"/>
-                    <div className="names_box">
-                        <div className="name_account">{cutLongName(user.firstname) + ' ' + cutLongName(user.lastname)}</div>
-                        <div className="user_name_account">{cutLongName(user.name)}</div>
-                    </div>
-                    <div className="account_company">{cutLongName(user.company)}</div>
-                    <div className="account_contacts">{user.phone1 ? user.phone1 : user.email}</div>
-                    <div className="account_last_update">{calcLastUpdate(user.update)}</div>
-                    {active ? null : <Link to={`/Wizard-form/${user.id}`} ><img className="account_edit" src={edit} alt="edit" /></Link>}
-                    {active ? 
-                    <div ref={wrapperRef} className="extra_box" >
-                        <img fill="red" className="account_close_red" src={close} alt="close"/>
-                        <div className="delete_red" onClick={() => showConfirmation(user.img ? user.img : user.name, user.id)}>delete</div>
-                    </div> : 
-                    <img className="account_close" src={close} alt="close" onClick={() => actionConfirmation(user.id)}/>}
-                </li>
-            </CSSTransition>           
+            return (
+                <CSSTransition key={user.id} timeout={500} classNames={clazz}>
+                    <li className={clazz}>
+                        <img className="account_pic" src={user.img ? user.img : avatar} alt="user"/>
+                        <div className="names_box">
+                            <div className="name_account">{cutLongName(user.firstname) + ' ' + cutLongName(user.lastname)}</div>
+                            <div className="user_name_account">{cutLongName(user.name)}</div>
+                        </div>
+                        <div className="account_company">{cutLongName(user.company)}</div>
+                        <div className="account_contacts">{user.phone1 ? user.phone1 : user.email}</div>
+                        <div className="account_last_update">{calcLastUpdate(user.update)}</div>
+                        {active ? null : <Link to={`/wizard-form/${user.id}`} ><img className="account_edit" src={edit} alt="edit" /></Link>}
+                        {active ? 
+                        <div ref={wrapperRef} className="extra_box" >
+                            <img fill="red" className="account_close_red" src={close} alt="close"/>
+                            <div className="delete_red" 
+                                onClick={() => showConfirmation(user?.img,user.id,user.name)}
+                                >delete</div>
+                        </div> : 
+                        <img className="account_close" src={close} alt="close" onClick={() => actionConfirmation(user.id)}/>}
+                    </li>
+                </CSSTransition> 
+            )          
         })
         return(
-            <TransitionGroup className="wrapp_account_list" component={'ul'}>
-                {items}
-            </TransitionGroup>
+            <>
+                <TransitionGroup className="wrapp_account_list" component={'ul'}>
+                    {items}
+                </TransitionGroup>
+            </>
+            
         )
     } 
 
@@ -141,18 +156,18 @@ const AccountList = () => {
             {errorMessage}
             {spiner}
             {allUsers.length === 0 && isLoading !== 'loading' ? <NoUsers/> : renderAccountList(allUsers)}
-            {dialog.pic ? 
+            {dialog.name ? 
             <div className="dialog_wrapp" onClick={() => setDialog("")}>
             <div className="dilog_window">
                 <p className="dilog_name">"Are you sure you want to delete?"</p>
-                <img className="dialog_pic" src={dialog.pic} alt="user" />
+                {dialog.pic ? <img className="dialog_pic" src={dialog.pic} alt="user"/> : <div className="dialog_name">{cutLongName(dialog.name)}</div>}
                 <div className="dialog_buttons">
                     <button className="button_yes" onClick={() => onDeleteUser()}>Yes</button>
                     <button className="button_no" onClick={() => setDialog("")}>No</button>
                 </div>
             </div>
             </div> : null}
-            <button className="generate"onClick={() => startGenerateRandomListOfUsers()}>Generate accounts</button>
+            {isLoading !== 'loading' ? <button className="generate"onClick={() => startGenerateRandomListOfUsers(100)}>Generate accounts</button> : null}
         </>
     );
 }

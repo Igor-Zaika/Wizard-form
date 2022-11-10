@@ -13,7 +13,6 @@ const initialState = usersAdapter.getInitialState({
     ],
     activeIcon: 'user',
     formsLoadingStatus: 'idle',
-    singleUser: null,
 });
 
 export const usersData = createAsyncThunk(

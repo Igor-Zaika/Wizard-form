@@ -27,7 +27,7 @@ const UserEditing = () => {
                 <img  className="users_lists_arrow" src={arrow} alt="arrow" />
                 <div 
                     className="users_lists_text" 
-                    onClick={() => navigate(`/Wizard-form/${single[0].id}`)}>Users Profile</div>
+                    onClick={() => navigate(`/wizard-form/${single[0].id}`)}>Users Profile</div>
                 <h1 className="editing_title">Editing</h1>
             </div>
             <TopOfForm/>

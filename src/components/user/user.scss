@@ -51,6 +51,11 @@
     height: 200px;
     border-radius: 100%;
     border: 3px solid #5E97F3;
+    &_avatar{
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+    }
 }
 .user_box_one {
     display: flex;

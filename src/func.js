@@ -111,14 +111,13 @@ const getRandomPhoneNumber = () => {
 const getRandomDateOfBirth = () => {
     const year = (new Date()).getFullYear() - getRandomNum(18,100);
     let month = getRandomNum(1,13);
-    month = month < 10 ? '0' + month : month;
-    let day = month === 2 ? getRandomNum(1,29) : month === 4 || month === 6 || month === 9 || month === 4 ? getRandomNum(1,31) : getRandomNum(1,32)
-    day = day > 10 ? day : '0' + day;
-    return `${day}.${month}.${year}`
+    month = month < 10 ? '0' + month : month.toString();
+    let day = month === '02' ? getRandomNum(1,29) : month === '04' || month === '06' || month === '09' || month === '11' ? getRandomNum(1,31) : getRandomNum(1,32)
+    day = day >= 10 ? day : '0' + day;
+    return new Date(`${year}-${month}-${day}`)
 }
 
-
-const generateOneRandomUser = () => {
+export const generateOneRandomUser = () => {
     let user = {};
     user.id = uuidv4();
     user.name = getrandomValue(possibleLetters,1,20);
@@ -141,14 +140,7 @@ const generateOneRandomUser = () => {
     user.skills = getRandomItems(skills, 3);
     user.info = getRandomNum(0,2) === 0 ? getrandomValue(possibleLetters,1,300) : '';
     user.hobies = getRandomNum(0,2) === 0 ? getRandomItems(hobbies, 0) : '';
+    user.update = Date.now();
     return user
-}
-
-export const generateRandomListOfUsers = (num) => {
-    let generateList = [];
-    for(let i = 0; i < num; i++){
-        generateList.push(generateOneRandomUser());
-    }
-    return generateList;
 }
 

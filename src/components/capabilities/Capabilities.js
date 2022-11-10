@@ -95,19 +95,20 @@ const Capabilities = () => {
 
     return(
         <Formik
-            initialValues={single.length > 0 && location.pathname === '/Wizard-form/userEditing' ? single[0] : initialStore}
+            initialValues={single.length > 0 && location.pathname === '/wizard-form/userEditing' ? single[0] : initialStore}
             validationSchema={validationRules}
             onSubmit = {(values, {resetForm}) => {
-                if(location.pathname === '/Wizard-form/userEditing') {
+                if(location.pathname === '/wizard-form/userEditing') {
                     setSingleUser('singleUser', values);
                     dispatch(changeSingleUserData(changeLastUpdate(values)));
                     dispatch((changeEditedUserData(changeLastUpdate(values))));
-                    navigate(`/Wizard-form/${single[0].id}`);
+                    navigate(`/wizard-form/${single[0].id}`);
                 } else {
                     set('capabilities', values);
                     getAllFormsData();
                     clear();
                     dispatch(switchForm("account"));
+                    navigate('/wizard-form');
                     setTimeout(() => resetForm({
                         skills:[],
                         info: '',
@@ -181,7 +182,7 @@ const Capabilities = () => {
                             </MyCheckbox>
                         </div>
                     </div>
-                    {single.length > 0 && location.pathname === '/Wizard-form/userEditing' ? <button type="submit" className='button_account'>Save</button> :
+                    {single.length > 0 && location.pathname === '/wizard-form/userEditing' ? <button type="submit" className='button_account'>Save</button> :
                         <>
                             <button onClick={() => dispatch(switchForm("contacts"))} className='button_capabilities_back' >Back</button>
                             <button type="submit" className='button_capabilities_finish' disabled={capabilitiesName}>Finish</button>
