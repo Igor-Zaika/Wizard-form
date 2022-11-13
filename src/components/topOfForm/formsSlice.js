@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 
-import { getAllList, delUser, setList, clearUsers } from '../indexedDB';
+import { getAllList, delUser, setList } from '../indexedDB';
 
 const usersAdapter = createEntityAdapter();
 
@@ -22,9 +22,9 @@ export const usersData = createAsyncThunk(
     // }
     (num) => {
         return getAllList().then(request => {
-            const end = num * 7;
+            const end = num * 6;
             const start = (end/num) * (num - 1);
-            if(request.length < 7){
+            if(request.length < 6){
                 return request;
             } else if(request.length - end > 0){
                 return request.slice(start, end);

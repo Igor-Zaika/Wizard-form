@@ -1,4 +1,4 @@
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
+
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useRef, useEffect } from 'react';
@@ -28,17 +28,17 @@ const AccountList = () => {
     });
     const [singleUserId, setSingleUserId] = useState(null);
     const [totalCount, setTotalCount] = useState(0);
-    const pagesCount = Math.ceil(totalCount/7);
+    const pagesCount = Math.ceil(totalCount/6);
     const pages = [];
+    
+    createPaginationPages(pages, pagesCount, currentPage);
 
     useEffect(() => {
         dispatch(usersData(currentPage));
-        console.log('effect page')
         // eslint-disable-next-line
     },[currentPage])
 
     useEffect(() => {
-        console.log('effect total')
         getAllList().then(request => {
             return setTotalCount(request.length)
         })
@@ -118,19 +118,17 @@ const AccountList = () => {
             const user = generateOneRandomUser();
             setList(user.id,user);
         }
-        dispatch(usersData(currentPage));
-        
+        dispatch(usersData(currentPage));    
     }
 
     const switchPage = (page) => {
-        dispatch(clearAllListOfUsers());
-        setCurrentPage(page);
-        // dispatch(usersData(page));
+        if(currentPage !== page) {
+            dispatch(clearAllListOfUsers());
+            setCurrentPage(page);
+        }
     }
-
-    createPaginationPages(pages, pagesCount, currentPage);
     
-    const createPagination = () => {
+    const renderPagination = () => {       
         return <div className="pagination">
             {pages.map((page,index) => <span 
                 key={index} 
@@ -144,36 +142,32 @@ const AccountList = () => {
         const items = arr.map(user => {
             let active = singleUserId === user.id
             let clazz = active ? "account_frame_shifted" : "account_frame"
-            return (
-                <CSSTransition key={user.id} timeout={500} classNames={clazz}>
-                    <li className={clazz}>
-                        <img className="account_pic" src={user.img ? user.img : avatar} alt="user"/>
-                        <div className="names_box">
-                            <div className="name_account">{cutLongName(user.firstname) + ' ' + cutLongName(user.lastname)}</div>
-                            <div className="user_name_account">{cutLongName(user.name)}</div>
-                        </div>
-                        <div className="account_company">{cutLongName(user.company)}</div>
-                        <div className="account_contacts">{user.phone1 ? user.phone1 : user.email}</div>
-                        <div className="account_last_update">{calcLastUpdate(user.update)}</div>
-                        {active ? null : <Link to={`/wizard-form/${user.id}`} ><img className="account_edit" src={edit} alt="edit" /></Link>}
-                        {active ? 
-                        <div ref={wrapperRef} className="extra_box" >
-                            <img fill="red" className="account_close_red" src={close} alt="close"/>
-                            <div className="delete_red" 
-                                onClick={() => showConfirmation(user?.img,user.id,user.name)}
-                                >delete</div>
-                        </div> : 
-                        <img className="account_close" src={close} alt="close" onClick={() => actionConfirmation(user.id)}/>}
-                    </li>
-                </CSSTransition> 
+            return (                 
+                <li className={clazz} key={user.id}>
+                    <img className="account_pic" src={user.img ? user.img : avatar} alt="user"/>
+                    <div className="names_box">
+                        <div className="name_account">{cutLongName(user.firstname) + ' ' + cutLongName(user.lastname)}</div>
+                        <div className="user_name_account">{cutLongName(user.name)}</div>
+                    </div>
+                    <div className="account_company">{cutLongName(user.company)}</div>
+                    <div className="account_contacts">{user.phone1 ? user.phone1 : user.email}</div>
+                    <div className="account_last_update">{calcLastUpdate(user.update)}</div>
+                    {active ? null : <Link to={`/wizard-form/${user.id}`} ><img className="account_edit" src={edit} alt="edit" /></Link>}
+                    {active ? 
+                    <div ref={wrapperRef} className="extra_box" >
+                        <img fill="red" className="account_close_red" src={close} alt="close"/>
+                        <div className="delete_red" 
+                            onClick={() => showConfirmation(user?.img,user.id,user.name)}
+                            >delete</div>
+                    </div> : 
+                    <img className="account_close" src={close} alt="close" onClick={() => actionConfirmation(user.id)}/>}
+                </li>
             )          
         })
         return(
-            <>
-                <TransitionGroup className="wrapp_account_list" component={'ul'}>
+            <div className="wrapp_account_list">
                     {items}
-                </TransitionGroup>
-            </>
+            </div>
             
         )
     } 
@@ -197,8 +191,8 @@ const AccountList = () => {
                 </div>
             </div>
             </div> : null}
-            {isLoading !== 'loading' ? <button className="generate"onClick={() => startGenerateRandomListOfUsers(100)}>Generate accounts</button> : null}
-            {isLoading === 'idle' ? createPagination() : null}
+            {isLoading !== 'loading' ? <button className="generate"onClick={() => startGenerateRandomListOfUsers(50)}>Generate accounts</button> : null}
+            {isLoading !== 'loading' ? renderPagination() : null}
         </>
     );
 }
