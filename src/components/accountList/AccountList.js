@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useRef, useEffect } from 'react';
 
-import { setList, delUser } from '../indexedDB'
-import {  generateOneRandomUser } from '../../func';
+import { setList, getAllList, clearUsers } from '../indexedDB'
+import {  generateOneRandomUser, createPaginationPages } from '../../func';
 import { selectAll, removeUser, usersData, clearAllListOfUsers } from '../topOfForm/formsSlice'
 import NoUsers from '../noUsers/NoUsers';
 import Spinner from '../spinner/Spinner';
@@ -18,21 +18,31 @@ import avatar from '../../icons/avatar.svg';
 const AccountList = () => {
     const allUsers = useSelector(selectAll);
     const isLoading = useSelector(state => state.users.formsLoadingStatus);
-
     const dispatch = useDispatch();
     const wrapperRef = useRef(null);
- 
+    const [currentPage, setCurrentPage] = useState(1);
     const [dialog, setDialog] = useState({
         pic: "",
         name: "",
         id: "",
     });
     const [singleUserId, setSingleUserId] = useState(null);
+    const [totalCount, setTotalCount] = useState(0);
+    const pagesCount = Math.ceil(totalCount/7);
+    const pages = [];
 
     useEffect(() => {
-        dispatch(usersData());
+        dispatch(usersData(currentPage));
+        console.log('effect page')
         // eslint-disable-next-line
-    },[])
+    },[currentPage])
+
+    useEffect(() => {
+        console.log('effect total')
+        getAllList().then(request => {
+            return setTotalCount(request.length)
+        })
+    }, [totalCount])
 
     const showConfirmation = (pic, id, name) => {
         setDialog({
@@ -41,7 +51,7 @@ const AccountList = () => {
             name
         });
     }
-
+    
     const actionConfirmation = (id) => {
         setSingleUserId(id)
 	}
@@ -61,6 +71,7 @@ const AccountList = () => {
 
     const onDeleteUser = () => {
         dispatch(removeUser(dialog.id));
+        setTotalCount(totalCount - 1);
         setDialog({
             pic: "",
             id: "",
@@ -100,20 +111,39 @@ const AccountList = () => {
     }
 
     const startGenerateRandomListOfUsers = (num) => {
+        setTotalCount(num)
+        clearUsers();
         dispatch(clearAllListOfUsers());
-        for(let i = 0;i < num; i++){
+        for(let i = 0; i < num; i++){
             const user = generateOneRandomUser();
             setList(user.id,user);
         }
-        dispatch(usersData());
+        dispatch(usersData(currentPage));
+        
     }
+
+    const switchPage = (page) => {
+        dispatch(clearAllListOfUsers());
+        setCurrentPage(page);
+        // dispatch(usersData(page));
+    }
+
+    createPaginationPages(pages, pagesCount, currentPage);
     
+    const createPagination = () => {
+        return <div className="pagination">
+            {pages.map((page,index) => <span 
+                key={index} 
+                className={currentPage === page ? "pagination_current_page" : "pagination_page"}
+                onClick={() => switchPage(page)}
+                >{page}</span>)}
+        </div>
+    }
 
     const renderAccountList = (arr) => {  
         const items = arr.map(user => {
             let active = singleUserId === user.id
             let clazz = active ? "account_frame_shifted" : "account_frame"
-        
             return (
                 <CSSTransition key={user.id} timeout={500} classNames={clazz}>
                     <li className={clazz}>
@@ -149,13 +179,13 @@ const AccountList = () => {
     } 
 
     const errorMessage = isLoading === "error" ? <ErrorMessage/> : null;
-    const spiner = isLoading === "loading" ? <Spinner/> : null
+    const spiner = isLoading === "loading" ? <Spinner/> : null;
 
     return(
         <>  
             {errorMessage}
             {spiner}
-            {allUsers.length === 0 && isLoading !== 'loading' ? <NoUsers/> : renderAccountList(allUsers)}
+            {allUsers.length === 0 && isLoading !== 'loading' && totalCount === 0 ? <NoUsers/> : renderAccountList(allUsers)}
             {dialog.name ? 
             <div className="dialog_wrapp" onClick={() => setDialog("")}>
             <div className="dilog_window">
@@ -168,6 +198,7 @@ const AccountList = () => {
             </div>
             </div> : null}
             {isLoading !== 'loading' ? <button className="generate"onClick={() => startGenerateRandomListOfUsers(100)}>Generate accounts</button> : null}
+            {isLoading === 'idle' ? createPagination() : null}
         </>
     );
 }

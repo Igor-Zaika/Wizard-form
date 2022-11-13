@@ -17,10 +17,25 @@ const initialState = usersAdapter.getInitialState({
 
 export const usersData = createAsyncThunk(
     'forms/getForms',
-    () => {
-        return getAllList()
+    // () => {
+    //     return getAllList()
+    // }
+    (num) => {
+        return getAllList().then(request => {
+            const end = num * 7;
+            const start = (end/num) * (num - 1);
+            if(request.length < 7){
+                return request;
+            } else if(request.length - end > 0){
+                return request.slice(start, end);
+            } else if(request.length - end <= 0){                  
+                return request.slice(start,request.length);
+            }
+        })
     }
 );
+
+
 
 const formsSlice = createSlice({
     name: 'users',
@@ -49,7 +64,7 @@ const formsSlice = createSlice({
         },
         clearAllListOfUsers: (state) => {
             usersAdapter.removeAll(state);
-            clearUsers();
+            // clearUsers();
         },
     },
     extraReducers: (builder) => {

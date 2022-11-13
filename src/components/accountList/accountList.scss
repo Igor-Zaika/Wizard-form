@@ -210,3 +210,26 @@
         transform: translate(-50%,-50%);
     }
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    &_page {
+        border: 1px solid lightblue;
+        // border-radius: 100%;
+        padding: 5px 10px;
+        margin: 10px;
+        color: #4E86E4;
+        cursor: pointer;
+    }
+    &_current_page {
+        // border-radius: 100%;
+        padding: 5px 10px;
+        margin: 10px;
+        color: #4E86E4;
+        cursor: pointer;
+        border: 3px solid #4E86E4;
+        font-weight: 700;
+    }
+}
+
