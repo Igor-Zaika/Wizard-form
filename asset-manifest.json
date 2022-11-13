@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/wizard-form/static/css/main.f3cdd096.css",
-    "main.js": "/wizard-form/static/js/main.5b31fa5b.js",
+    "main.css": "/wizard-form/static/css/main.e28ea74f.css",
+    "main.js": "/wizard-form/static/js/main.40964981.js",
     "static/media/Roboto-Medium.eot": "/wizard-form/static/media/Roboto-Medium.f9f0c87146a33023da7e.eot",
     "static/media/Roboto-Medium.ttf": "/wizard-form/static/media/Roboto-Medium.ef677e217f2009c16854.ttf",
     "static/media/Roboto-Regular.eot": "/wizard-form/static/media/Roboto-Regular.30b57652c88c5dbd65de.eot",
@@ -27,11 +27,11 @@
     "static/media/add.svg": "/wizard-form/static/media/add.9395ec2153c43461d546891205028e37.svg",
     "static/media/menu.svg": "/wizard-form/static/media/menu.81c77251fced0a95e1f523369271e090.svg",
     "static/media/minus.svg": "/wizard-form/static/media/minus.d9f8681eba6902449bdbc6aa268593f0.svg",
-    "main.f3cdd096.css.map": "/wizard-form/static/css/main.f3cdd096.css.map",
-    "main.5b31fa5b.js.map": "/wizard-form/static/js/main.5b31fa5b.js.map"
+    "main.e28ea74f.css.map": "/wizard-form/static/css/main.e28ea74f.css.map",
+    "main.40964981.js.map": "/wizard-form/static/js/main.40964981.js.map"
   },
   "entrypoints": [
-    "static/css/main.f3cdd096.css",
-    "static/js/main.5b31fa5b.js"
+    "static/css/main.e28ea74f.css",
+    "static/js/main.40964981.js"
   ]
 }
