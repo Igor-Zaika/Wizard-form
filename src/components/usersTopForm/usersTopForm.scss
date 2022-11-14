@@ -8,7 +8,7 @@
 .users_name {
     width: 3.71%;
     height: 17px;
-    margin-left: 7.22%;
+    margin-left: 14%;
     margin-top: 14px;
     font-family: 'Roboto';
     font-weight: 500;
@@ -16,9 +16,9 @@
     color: #FFFFFF;
 }
 .users_company {
-    width: 5.99%;
+    width: 4%;
     height: 17px;
-    margin-left: 20.01%;
+    margin-left: 17%;
     margin-top: 14px;
     font-family: 'Roboto';
     font-weight: 500;
@@ -44,4 +44,14 @@
     font-weight: 500;
     font-size: 14px;
     color: #FFFFFF;
+}
+@media (max-width: 991px){
+    .top_users_form {
+        width: 100%;
+        margin-left: 0;
+    }
+    .users_company {
+        width: 4.99%;
+        margin-left: 21%;
+    }
 }

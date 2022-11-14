@@ -11,7 +11,7 @@ const initialState = usersAdapter.getInitialState({
         {name: 'contacts', active: false},
         {name: 'capabilities', active: false}
     ],
-    activeIcon: 'user',
+    activeIcon: 'list',
     formsLoadingStatus: 'idle',
 });
 
@@ -64,7 +64,6 @@ const formsSlice = createSlice({
         },
         clearAllListOfUsers: (state) => {
             usersAdapter.removeAll(state);
-            // clearUsers();
         },
     },
     extraReducers: (builder) => {

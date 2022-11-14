@@ -105,7 +105,7 @@ const Account = () => {
                             )
                             .test('FILE_FORMAT',
                                 'upload file has unsuported format',
-                                (value) => !value || (value && supportedFormats.includes(value.type))
+                                (value) => !value || (value && supportedFormats.includes(value?.type))
                             ),
                         name: Yup.string()
                             .required("Required field")
@@ -142,34 +142,31 @@ const Account = () => {
                 >
                     {({values, setFieldValue, setFieldTouched, errors, touched}) => (
                         <Form className="account_form">
-                            <div className="avatar_box">
-                                <img 
-                                    className="avatar" 
-                                    // src={single.length > 0 ? avatarPreview || single[0].img : avatarPreview || avatar} 
-                                    src={ avatarPreview || single[0]?.img || avatar}
-                                    alt="avatar" />
-                                <div className='add_box'>
-                                    <img className='plus' src={plus} alt="plus" />
-                                    <label htmlFor="avatar"  className="add_avatar" >add avatar</label>
+                            <div className="account_photo">
+                                <div className="account_photo-img">
+                                    <img src={ avatarPreview || single[0]?.img || avatar} alt="avatar" />
                                 </div>
-                                <input
-                                    className="add_avatar_input"  
-                                    type="file"
-                                    name="avatar"
-                                    onBlur={() => setFieldTouched('avatar', true)} 
-                                    onChange={(e) => {
-                                        const fileReader = new FileReader();
-                                        fileReader.onload = () => {
-                                            if (fileReader.readyState === 2) {
-                                                setFieldValue('img', fileReader.result);
-                                                setAvatarPreview(fileReader.result);
-                                            }
-                                        };
-                                        fileReader.readAsDataURL(e.target.files[0]);
-                                        setFieldValue('avatar', e.target.files[0]);
-                                    }}
-                                />
-                                <Error className="text_error_image" name="avatar" component="div"/>
+                                <span>
+                                    <input
+                                        className="add_avatar_input"  
+                                        type="file"
+                                        name="avatar"
+                                        onBlur={() => setFieldTouched('avatar', true)} 
+                                        onChange={(e) => {
+                                            const fileReader = new FileReader();
+                                            fileReader.onload = () => {
+                                                if (fileReader.readyState === 2) {
+                                                    setFieldValue('img', fileReader.result);
+                                                    setAvatarPreview(fileReader.result);
+                                                }
+                                            };
+                                            fileReader.readAsDataURL(e.target.files[0]);
+                                            setFieldValue('avatar', e.target.files[0]);
+                                        }}
+                                    />
+                                    <label className='add_avatar' htmlFor="avatar">+ add avatar</label>
+                                    <Error className="text_error_image" name="avatar" component="div"/>
+                                </span>
                             </div>
                             <div className="account_inputs_box">
                                 <label htmlFor="name"  className="account_label">User name</label>
@@ -215,13 +212,13 @@ const Account = () => {
     }
 
     const errorMessage = singleLoadingStatus === "error" ? <ErrorMessage/> : null;
-    const spiner = singleLoadingStatus === "loading" ? <Spinner/> : null
+    const spiner = singleLoadingStatus === "loading" ? <Spinner/> : null;
+    
     
     return(
-        <>
-            {errorMessage}
-            {spiner}
-            {singleLoadingStatus !== 'loading' ? renderAccount() : null}
+        <>  
+            {location.pathname === '/wizard-form/userCreation' ? renderAccount() : (errorMessage, spiner)}
+            {singleLoadingStatus !== 'loading' && location.pathname === '/wizard-form/userEditing' ? renderAccount() : null}
         </>
     )
 }

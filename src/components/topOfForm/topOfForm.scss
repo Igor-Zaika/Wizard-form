@@ -37,3 +37,12 @@ h1 {
         color: #FFFFFF;
     }
 }
+@media (max-width: 991px){
+    .top_of_form {
+        width: 83%;
+        margin-left: 65px;
+    }
+    .content_rectangle, .content_rectangle_active {
+        font-size: 18px;
+    }
+}

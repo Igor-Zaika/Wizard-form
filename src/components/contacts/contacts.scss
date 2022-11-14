@@ -125,3 +125,9 @@
     font-size: 9px;
     color: #EB5757;
 }
+@media (max-width: 991px){
+    .contacts_form {
+        width: 83%;
+        margin-left: 65px;
+    }
+}

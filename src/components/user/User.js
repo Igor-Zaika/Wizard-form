@@ -1,12 +1,12 @@
 
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import { setSingleUser } from '../indexedDB';
-import { switchForm, usersData, selectAll } from '../topOfForm/formsSlice'
+import { switchForm, usersData, selectAll, switchActiveIcon } from '../topOfForm/formsSlice'
 import { removeSingleUser, singleUserData, selectAll as singleData } from '../user/SingleUserSlice'
 import arrow from '../../icons/menu.svg'
 import edit from '../../icons/edit.png'
@@ -14,6 +14,7 @@ import avatar from '../../icons/avatar.svg';
 import './user.scss'
 
 const User = () => {
+    
     const dispatch = useDispatch();
     const allUsers = useSelector(selectAll);
     const single = useSelector(singleData);
@@ -21,8 +22,8 @@ const User = () => {
     const user = allUsers.filter(user => user.id === userId.userId);
     const isLoading = useSelector(state => state.users.formsLoadingStatus);
 
-    setSingleUser('singleUser', user[0])
-    
+    setSingleUser('singleUser', user[0]);
+
     useEffect(() => {
         if(!single[0]){
             dispatch(singleUserData());
@@ -32,7 +33,7 @@ const User = () => {
     
     useEffect(() => {
         if(user.length === 0){   
-            dispatch(usersData());   
+            dispatch(usersData(1));   
         }
         // eslint-disable-next-line
     }, []);
@@ -206,8 +207,8 @@ const User = () => {
     
     return(
         <>
-            {errorMessage}
-            {spiner}
+            {/* {errorMessage} */}
+            {/* {spiner} */}
             {renderSingleUser()}
         </>
     )

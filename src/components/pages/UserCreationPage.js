@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux';
-import {  useDispatch } from 'react-redux'
+import { useSelector, useDispatch  } from 'react-redux';
 import { useEffect } from "react";
 
 import { switchActiveIcon } from '../topOfForm/formsSlice'
@@ -25,8 +24,7 @@ const UserCreation = () => {
             {tabs[0].active ? <Account/> : null}
             {tabs[1].active ? <Profile/> : null}
             {tabs[2].active ? <Contacts/> : null}
-            {tabs[3].active ? <Capabilities/> : null}
-            
+            {tabs[3].active ? <Capabilities/> : null}           
         </div>
     );
 }

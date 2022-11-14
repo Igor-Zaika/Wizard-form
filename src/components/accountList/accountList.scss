@@ -41,7 +41,7 @@
     border-radius: 100%;
 }
 .names_box {
-    width: 22.6%;
+    width: 28.6%;
     display: block;
     margin-left: 3%;
     margin-top: 37px;
@@ -61,7 +61,7 @@
     color: #475666;
 }
 .account_company {
-    width: 21.5%;
+    width: 18.5%;
     height: 17px;
     margin-top: 37px;
     font-family: 'Roboto';
@@ -70,8 +70,9 @@
     color: #475666;
 }
 .account_contacts {
-    width: 24.5%;
+    width: 19.5%;
     height: 17px;
+    margin-left: 5px;
     margin-top: 37px;
     font-family: 'Roboto';
     font-weight: 500;
@@ -79,7 +80,7 @@
     color: #475666;
 }
 .account_last_update {
-    width: 15.5%;
+    width: 14.5%;
     height: 17px;
     margin-top: 37px;
     font-family: 'Roboto';
@@ -90,6 +91,7 @@
 .account_edit {
     margin-top: 37px;
     width: 15px;
+    margin-left: 2%;
     height: 15px;
     filter: invert(82%) sepia(13%) saturate(259%) hue-rotate(172deg) brightness(91%) contrast(87%);
     cursor: pointer;
@@ -98,7 +100,8 @@
     margin-top: 37px;
     width: 15px;
     height: 15px;
-    margin-left: 2.27%;
+    margin-left: 4%;
+    margin-right: 2%;
     filter: invert(82%) sepia(13%) saturate(259%) hue-rotate(172deg) brightness(91%) contrast(87%);
     cursor: pointer;
 }
@@ -137,6 +140,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.2);
+    z-index: 2;
 }
 .dilog_window {
     display: flex;
@@ -189,10 +193,31 @@
     border: none;
     cursor: pointer;
 }
+.bottom_wrapp {
+    margin-top: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .generate {
-    margin-top: 50px;
-    margin-left: 75%;
-    border: none;
+    position: absolute;
+    bottom: 40px;
+    right: 16.6%;
+    border: 1px solid red;
+    width: 90px;
+    height: 40px;
+    background: rgb(244, 73, 73);
+    color: #FFFFFF;
+    cursor: pointer;
+    &:hover {
+        background: #ee0e0e;
+    }
+}
+.generate_single {
+    display: block;
+    margin: 40px 0 0 73%;
+    border: 1px solid red;
     width: 100px;
     height: 40px;
     background: rgb(244, 73, 73);
@@ -211,25 +236,56 @@
     }
 }
 .pagination {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 50px;
+    margin-top: 22px;
     &_page {
         border: 1px solid lightblue;
-        // border-radius: 100%;
         padding: 5px 10px;
         margin: 10px;
         color: #4E86E4;
         cursor: pointer;
     }
     &_current_page {
-        // border-radius: 100%;
         padding: 5px 10px;
         margin: 10px;
         color: #4E86E4;
         cursor: pointer;
         border: 3px solid #4E86E4;
         font-weight: 700;
+    }
+}
+.search-input {
+    border: 1px solid #4E86E4;
+    width: 500px;
+    color: lightblue;
+    font-size: 17px;
+    outline: none;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 15px 15px 30px rgba(0,0,0, .15);
+    color: blue;
+}
+@media (max-width: 1023px){
+    .account_close {
+        margin-left: 0;
+    }
+}
+@media (max-width: 991px){
+    .wrapp_account_list {
+        width: 100%;
+        margin-left: 0;
+    }
+    .names_box {
+        width: 26.6%;
+    }
+    .account_contacts {
+        margin-left: 0;
+        width: 22.5%;
+    }
+    .generate {
+        right: 3%;
+    }
+    .account_close {
+        margin-left: 10px;
     }
 }
 

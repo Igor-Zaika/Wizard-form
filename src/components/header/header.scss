@@ -97,8 +97,7 @@ body {
 .list_of_users_box_active {
     display: flex;
     margin-left: 56px;
-    text-decoration: none;
-    
+    text-decoration: none;   
 }
 .users {
     margin-top: 20px;
@@ -116,4 +115,12 @@ body {
     color: #FFFFFF;
     text-decoration: none;
 }
-
+@media (max-width: 991px){
+    .add_new_user_box, .add_new_user_box_active {
+        margin-left: 33%;
+    }
+    .list_of_users_box_active, .list_of_users_box {
+        margin-left: 40px;
+    }
+}
+    
