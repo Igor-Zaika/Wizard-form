@@ -15,7 +15,6 @@ import { set, keys, setSingleUser } from '../indexedDB';
 
 import './profile.scss'
 
-
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
 
@@ -31,14 +30,14 @@ const MyTextInput = ({ label, ...props }) => {
 };
 
 const Profile = () => {
-    const allUsers = useSelector(selectAll);
-    const single = useSelector(singleData);
+    const dispatch = useDispatch();
     let navigate = useNavigate();
     const location = useLocation();
     const { singleLoadingStatus } = useSelector(state => state.singleUser);
-    const dispatch = useDispatch();
+    const allUsers = useSelector(selectAll);
+    const single = useSelector(singleData);
     const [profileName, setProfileName] = useState(true);
-
+    
     useEffect(() => {
         keys().then((val) => {
             if(val.length > 0) {
@@ -47,8 +46,8 @@ const Profile = () => {
         })
     },[])
 
-    const checkUniqueEmail = () => {
-        return allUsers.map(user => {
+    const checkUniqueEmail = (arr) => {
+        return arr.map(user => {
             return user.email;
         })
     }
@@ -62,7 +61,7 @@ const Profile = () => {
         gender: ''
     }
 
-    const rensedProfile = () => {
+    const renderProfile = () => {
         return(
             <Formik 
                 initialValues={location.pathname === '/wizard-form/userEditing' ? single[0] : initialStore}
@@ -82,7 +81,7 @@ const Profile = () => {
                         .required("Required field")
                         .test('EMAIL_FORMAT', 
                             'Email already taken!',
-                            (value) => !checkUniqueEmail().includes(value) || single[0]?.email  === value
+                            (value) => !checkUniqueEmail(allUsers).includes(value) || single[0]?.email  === value
                         ), 
                     adress: Yup.string()
                         .max(50, "Too Long!"),
@@ -178,7 +177,7 @@ const Profile = () => {
         <>
             {errorMessage}
             {spiner}
-            {singleLoadingStatus !== 'loading' ? rensedProfile() : null}
+            {singleLoadingStatus !== 'loading' ? renderProfile() : null}
         </>
     )
 }

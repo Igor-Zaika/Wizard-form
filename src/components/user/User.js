@@ -1,12 +1,10 @@
 
-import { useParams, Link, useLocation } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
 import { setSingleUser } from '../indexedDB';
-import { switchForm, usersData, selectAll, switchActiveIcon } from '../topOfForm/formsSlice'
+import { switchForm, usersData, selectAll } from '../topOfForm/formsSlice'
 import { removeSingleUser, singleUserData, selectAll as singleData } from '../user/SingleUserSlice'
 import arrow from '../../icons/menu.svg'
 import edit from '../../icons/edit.png'
@@ -20,7 +18,6 @@ const User = () => {
     const single = useSelector(singleData);
     const userId = useParams();
     const user = allUsers.filter(user => user.id === userId.userId);
-    const isLoading = useSelector(state => state.users.formsLoadingStatus);
 
     setSingleUser('singleUser', user[0]);
 
@@ -69,7 +66,7 @@ const User = () => {
             <div className="title_box"> 
                 <img  className="users_lists_arrow" src={arrow} alt="arrow" />
                 <Link 
-                    onClick={() => delSingleUser(user)}
+                    onClick={() => delSingleUser()}
                     to="/wizard-form" 
                     className="users_lists_text"
                 >Users lists </Link>
@@ -201,14 +198,9 @@ const User = () => {
             </div>
         </>
     }
-
-    const errorMessage = isLoading === "error"  ? <ErrorMessage/> : null;
-    const spiner = isLoading === "loading"  ? <Spinner/> : null
     
     return(
         <>
-            {/* {errorMessage} */}
-            {/* {spiner} */}
             {renderSingleUser()}
         </>
     )

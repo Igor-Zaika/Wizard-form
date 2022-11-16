@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useRef, useEffect } from 'react';
 
+import { selectAll as  singleData, removeSingleUser } from '../user/SingleUserSlice'
 import { setList, getAllList, clearUsers } from '../indexedDB'
 import {  generateOneRandomUser, createPaginationPages } from '../../func';
 import { selectAll, removeUser, usersData, clearAllListOfUsers } from '../topOfForm/formsSlice'
@@ -16,9 +17,10 @@ import close from '../../icons/close.png';
 import avatar from '../../icons/avatar.svg';
 
 const AccountList = () => {
+    const dispatch = useDispatch();
+    const single = useSelector(singleData);
     const allUsers = useSelector(selectAll);
     const isLoading = useSelector(state => state.users.formsLoadingStatus);
-    const dispatch = useDispatch();
     const wrapperRef = useRef(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [dialog, setDialog] = useState({
@@ -28,22 +30,31 @@ const AccountList = () => {
     });
     const [singleUserId, setSingleUserId] = useState(null);
     const [totalCount, setTotalCount] = useState(0);
-    const pagesCount = Math.ceil(totalCount/6);
+    const pagesCount = Math.ceil(totalCount / 6);
     const pages = [];
     const [term, setTerm] = useState('');
-    
-    createPaginationPages(pages, pagesCount, currentPage);
+    const [filteredPaginationUsers, setFilteredPaginationUsers] = useState(null);
 
+    createPaginationPages(pages, pagesCount, currentPage);
+    
     useEffect(() => {
-        dispatch(usersData(currentPage));
+        dispatch(usersData());
+        if(single[0]){
+            dispatch(removeSingleUser(single[0]));
+        }
         // eslint-disable-next-line
-    },[currentPage])
+    },[]);
 
     useEffect(() => {
         getAllList().then(request => {
-            return setTotalCount(request.length)
+            setTotalCount(request.length)
         })
-    }, [totalCount])
+    },[])
+
+    useEffect(() => {
+        serchUser(allUsers,term);
+        // eslint-disable-next-line
+    }, [term])
 
     const showConfirmation = (pic, id, name) => {
         setDialog({
@@ -51,6 +62,24 @@ const AccountList = () => {
             id,
             name
         });
+    }
+
+    const changeTerm = (e) => {
+        setTerm(e.target.value);
+    }
+
+    function serchUser(users, term ) {
+        if(!term){
+            setFilteredPaginationUsers(null);
+            setTotalCount(allUsers.length);
+        }
+        if(term.length > 0){
+            let filterUsers =  users.filter(user => {
+                return user.firstname.indexOf(term) > -1 || user.lastname.indexOf(term) > -1
+            })
+            setFilteredPaginationUsers(filterUsers);
+            setTotalCount(filterUsers.length);
+        } 
     }
     
     const actionConfirmation = (id) => {
@@ -112,44 +141,36 @@ const AccountList = () => {
     }
 
     const startGenerateRandomListOfUsers = (num) => {
-        setTotalCount(num)
         clearUsers();
         dispatch(clearAllListOfUsers());
         for(let i = 0; i < num; i++){
             const user = generateOneRandomUser();
             setList(user.id,user);
         }
-        dispatch(usersData(currentPage));    
-    }
-
-    const switchPage = (page) => {
-        if(currentPage !== page) {
-            dispatch(clearAllListOfUsers());
-            setCurrentPage(page);
-        }
+        dispatch(usersData());
+        setTotalCount(num);   
     }
     
-    const renderPagination = () => {       
+    function renderPagination() {       
         return <div className="pagination">
             {pages.map((page,index) => <span 
                 key={index} 
                 className={currentPage === page ? "pagination_current_page" : "pagination_page"}
-                onClick={() => switchPage(page)}
+                onClick={() => setCurrentPage(page)}
                 >{page}</span>)}
         </div>
     }
 
-    const changeTerm = (e) => {
-        setTerm(e.target.value);
-    }
-
-    const serchUser = (users, term) => {
-        if(term.length === 0){
-            return users
+    const countPaginationUsers = (countPage, arr) => {
+        const end = countPage * 6;
+        const start = (end/countPage) * (countPage - 1);
+        if(arr.length < 6){
+            return arr;
+        } else if(arr.length - end > 0){
+            return arr.slice(start, end);
+        } else if(arr.length - end <= 0){                  
+            return arr.slice(start,arr.length);
         }
-        return users.filter(user => {
-            return user.firstname.indexOf(term) > -1 || user.lastname.indexOf(term) > -1
-        })
     }
 
     const renderAccountList = (arr) => {  
@@ -189,13 +210,13 @@ const AccountList = () => {
 
     const errorMessage = isLoading === "error" ? <ErrorMessage/> : null;
     const spiner = isLoading === "loading" ? <Spinner/> : null;
-    const filterUsers = serchUser(allUsers,term)
-
+    const usersForPaginationRender = term &&  filteredPaginationUsers ? filteredPaginationUsers : allUsers;
+    
     return(
         <>  
             {errorMessage}
             {spiner}
-            {allUsers.length === 0 && isLoading !== 'loading' && totalCount === 0 ? <NoUsers/> : renderAccountList(filterUsers)}
+            {allUsers.length === 0 && isLoading !== 'loading' ? <NoUsers/> : renderAccountList(countPaginationUsers(currentPage,usersForPaginationRender))}
             {dialog.name ? 
             <div className="dialog_wrapp" onClick={() => setDialog("")}>
             <div className="dilog_window">
@@ -209,7 +230,7 @@ const AccountList = () => {
                 </div>
             </div>
             </div> : null}
-            {isLoading !== 'loading' && totalCount > 0 
+            {isLoading !== 'loading' && allUsers.length > 0
                 ? 
                     <div className="bottom_wrapp">
                         <input 
@@ -226,7 +247,8 @@ const AccountList = () => {
                         </button>  
                     </div>            
                 : 
-                <button className="generate_single" onClick={() => startGenerateRandomListOfUsers(50)}>Generate accounts</button>}
+                <button className="generate_single" onClick={() => startGenerateRandomListOfUsers(50)}>Generate accounts</button>
+            }
         </>
     );
 }

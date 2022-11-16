@@ -12,6 +12,7 @@
     "idb": "^7.0.2",
     "multiselect-react-dropdown": "^2.0.25",
     "react": "^18.2.0",
+    "react-avatar-edit": "^1.2.0",
     "react-confirm": "^0.2.3",
     "react-datepicker": "^4.8.0",
     "react-datetime-picker": "^3.5.0",

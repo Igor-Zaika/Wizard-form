@@ -33,7 +33,6 @@ export async function getAll() {
 
 
 
-
 const dbPromiseSecond = openDB('allUsers', 1, {
   upgrade(db) {
     db.createObjectStore('users');

@@ -10,14 +10,14 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage  from '../errorMessage/ErrorMessage';
 import { changeSingleUserData, selectAll as  singleData } from '../user/SingleUserSlice'
 import { switchForm, changeEditedUserData, selectAll } from '../topOfForm/formsSlice'
-import { set, keys, setSingleUser } from '../indexedDB';
+import { set, keys, setSingleUser, setList, clear } from '../indexedDB';
 
 import './account.scss';
 import close from '../../icons/close.svg';
-import plus from '../../icons/add.svg';
 import avatar from '../../icons/avatar.svg';
 import eye_visibility from '../../icons/visibility.svg';
 import eye_offvisibility from '../../icons/offvisibility.svg';
+import { useEffect } from 'react';
 
 const MyPasswordInput = ({ label, img , ...props }) => {
     const [field, meta] = useField(props);
@@ -34,11 +34,11 @@ const MyPasswordInput = ({ label, img , ...props }) => {
 };
 
 const Account = () => {
-    const allUsers = useSelector(selectAll);
     const single = useSelector(singleData);
     let navigate = useNavigate();
     const location = useLocation();
     const { singleLoadingStatus } = useSelector(state => state.singleUser);
+    const allUsers = useSelector(selectAll);
     const dispatch = useDispatch();
     const [avatarPreview, setAvatarPreview] = useState(null);
     const [password, setPassword] = useState(location.pathname === '/wizard-form/userEditing' ? true : false);
@@ -53,11 +53,13 @@ const Account = () => {
         repeatpassword: '',
     }
 
-    keys().then((val) => {
-        if(val.length > 0 && val.length < 4) {
-            setSuggestTab(true)
-        }
-    })
+    useEffect(() => {
+        keys().then((val) => {
+            if(val.length > 0 && val.length < 4) {
+                setSuggestTab(true)
+            }
+        })
+    }, [suggestTab])
 
     const selectContinueForm = () => keys().then((val) => {
         switch (val.length) {
@@ -76,9 +78,9 @@ const Account = () => {
 
     const supportedFormats = ['image/jpg', 'image/jpeg', 'image/png'];
 
-    const checkUniqueName = () => {
-        return allUsers.map(user => {
-            return user.name;
+    const checkUniqueName = (arr) => {  
+        return arr.map(user => {
+            return user.name.toLowerCase();
         })
     }
 
@@ -86,15 +88,27 @@ const Account = () => {
         setvalue(value ? false : true);   
     };
 
+    const closeInfo = () => {
+        clear();
+        setSuggestTab(false);
+    }
+
+    const renderFormInfo = () => {
+        return(
+            <div className="account_frame_description">
+                <div className="frame_text">You have an unsaved user data. Do you want to complete it?</div>
+                <div className="frame_continue" onClick={() => selectContinueForm()} >Continue</div>
+                <img className="frame_close" src={close} alt="close" onClick={() => closeInfo()}/>
+            </div>
+        )
+    }
+
+    
+
     const renderAccount = () => {
         return(
             <>  
-                {suggestTab && location.pathname === '/wizard-form/userCreation' ? <div 
-                                    className="account_frame_description">
-                                    <div className="frame_text">You have an unsaved user data. Do you want to complete it?</div>
-                                    <div className="frame_continue" onClick={() => selectContinueForm()} >Continue</div>
-                                    <img className="frame_close" src={close} alt="close" />
-                                </div> : null}
+                {suggestTab && location.pathname === '/wizard-form/userCreation' ? renderFormInfo() : null}
                 <Formik
                     initialValues = {location.pathname === '/wizard-form/userEditing' ? single[0] : initialStore}
                     validationSchema={Yup.object({
@@ -112,7 +126,7 @@ const Account = () => {
                             .max(50, "Too Long!")
                             .test('NAME_FORMAT', 
                                 'Name already taken!',
-                                (value) => !checkUniqueName().includes(value) || single[0]?.name  === value
+                                (value) => !checkUniqueName(allUsers).includes(value?.toLowerCase()) || single[0]?.name  === value
                             ),   
                         password: Yup.string()
                             .min(4, "Too Short!")
@@ -124,6 +138,7 @@ const Account = () => {
                     })}
                     onSubmit = {(values, {resetForm}) => {
                         if(location.pathname === '/wizard-form/userEditing') { 
+                            setList(values.id,values);
                             setSingleUser('singleUser', values);
                             dispatch(changeSingleUserData(changeLastUpdate(values)));
                             dispatch((changeEditedUserData(changeLastUpdate(values))));
